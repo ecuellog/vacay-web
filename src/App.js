@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
+  Redirect,
   Switch,
   Link
 } from "react-router-dom";
@@ -51,6 +52,7 @@ class App extends React.Component {
             </nav>
       
             <Switch>
+              <Redirect exact from="/" to="/login" />
               <ViewWrapperUnauthenticated path="/login">
                 <LoginView />
               </ViewWrapperUnauthenticated>
