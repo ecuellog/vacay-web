@@ -1,17 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-// Store
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './store/reducers';
 import thunk from 'redux-thunk';
-
+import { composeWithDevTools } from 'redux-devtools-extension';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer,
+  compose(applyMiddleware(thunk), composeWithDevTools())
+);
+
+export const api = axios.create({
+  baseURL: 'http://localhost:3000'
+});
+
+api.interceptors.request.use(
+  req => {
+    req.headers['x-csrf-token'] = Cookies.get('csrf-token');
+    return req;
+  }
+)
 
 ReactDOM.render(
   <Provider store={store}>
