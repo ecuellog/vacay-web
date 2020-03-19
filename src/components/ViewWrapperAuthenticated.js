@@ -4,24 +4,28 @@ import {
   Redirect
 } from "react-router-dom";
 import { connect } from 'react-redux';
+import NavBar from './NavBar/NavBar';
 
 function ViewWrapperAuthenticated({ children, isAuthenticated, ...rest}) {
   return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        isAuthenticated ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location }
-            }}
-          />
-        )
-      }
-    />
+    <div>
+      <NavBar/>
+      <Route
+        {...rest}
+        render={({ location }) =>
+          isAuthenticated ? (
+            children
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: location }
+              }}
+            />
+          )
+        }
+      />
+    </div>
   );
 }
 
