@@ -1,6 +1,7 @@
 import React from 'react';
 import { authenticateUser } from '../../store/actions/auth';
 import { connect } from 'react-redux';
+import Logo from '../../assets/images/logov2_200x200.png';
 import './LoginView.scss';
 
 class LoginView extends React.Component {
@@ -38,7 +39,7 @@ class LoginView extends React.Component {
         <div className="container-fluid d-flex flex-column justify-content-center">
           <div className="login-container row px-3 py-5 px-md-5">
             <div className="col-sm-8 offset-sm-2">
-              <h1 className="mb-5">Vacay Tabs</h1>
+              <img className="mb-5" src={Logo}></img>
               <form className="login-form" onSubmit={this.handleSubmit}>
                 <div className="form-group">
                   <input
