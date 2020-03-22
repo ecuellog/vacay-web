@@ -16,4 +16,10 @@ export default class AuthService {
       { withCredentials: true }
     );
   }
+
+  static logout() {
+    return api.get('/api/auth/logout',
+      { withCredentials: true }
+    )
+  }
 }

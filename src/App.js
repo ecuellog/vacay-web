@@ -2,14 +2,14 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Redirect,
-  Switch,
-  Link
-} from "react-router-dom";
+  Switch
+} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setTokenAuthenticatedUser } from './store/actions/auth';
 
 // Components
-import LoginView from './views/LoginView';
+import SideBarViewWrapper from './components/SideBarViewContainer/SideBarViewContainer';
+import LoginView from './views/LoginView/LoginView';
 import TabsView from './views/TabsView';
 import SharedTabsView from './views/SharedTabsView';
 import FriendsView from './views/FriendsView';
@@ -31,42 +31,30 @@ class App extends React.Component {
       { this.props.initialAuthDone && 
         <Router>
           <div>
-            <nav>
-              <ul>
-                <li>
-                  <Link to="/login">login</Link>
-                </li>
-                <li>
-                  <Link to="/tabs">tabs</Link>
-                </li>
-                <li>
-                  <Link to="/sharedtabs">sharedtabs</Link>
-                </li>
-                <li>
-                  <Link to="/friends">friends</Link>
-                </li>
-                <li>
-                  <Link to="/settings">Settings</Link>
-                </li>
-              </ul>
-            </nav>
-      
             <Switch>
               <Redirect exact from="/" to="/login" />
               <ViewWrapperUnauthenticated path="/login">
                 <LoginView />
               </ViewWrapperUnauthenticated>
               <ViewWrapperAuthenticated path="/tabs">
-                <TabsView />
+                <SideBarViewWrapper>
+                  <TabsView />
+                </SideBarViewWrapper>
               </ViewWrapperAuthenticated>
               <ViewWrapperAuthenticated path="/sharedtabs">
-                <SharedTabsView />
+                <SideBarViewWrapper>
+                  <SharedTabsView />
+                </SideBarViewWrapper>
               </ViewWrapperAuthenticated>
               <ViewWrapperAuthenticated path="/friends">
-                <FriendsView />
+                <SideBarViewWrapper>
+                  <FriendsView />
+                </SideBarViewWrapper>
               </ViewWrapperAuthenticated>
               <ViewWrapperAuthenticated path="/settings">
-                <SettingsView />
+                <SideBarViewWrapper>
+                  <SettingsView />
+                </SideBarViewWrapper>
               </ViewWrapperAuthenticated>
             </Switch>
           </div>

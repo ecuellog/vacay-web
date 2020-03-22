@@ -1,0 +1,38 @@
+@font-face {
+  font-family: "Lato";
+  src: url("../assets/fonts/Lato/Lato-Regular.ttf") format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+// Boostrap variable overrides
+$body-bg: #242635;
+$body-color: #E0E0E0;
+
+$primary: #35B099;
+
+$facebook-blue: #3B5998;
+$google-blue: #4285F4;
+
+$font-family-sans-serif: "Lato";
+
+$border-radius: 1px;
+$border-radius-lg: 2px;
+$border-radius-sm: 0.5px;
+
+$input-btn-padding-y: .35rem;
+$btn-padding-x: 1rem;
+$btn-font-size: 0.85rem;
+
+$input-height: unset;
+@import "node_modules/bootstrap/scss/bootstrap";
+
+.btn {
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+}
+
+// Colors that may become useful
+// purple: #6929CC;
+// green: #35B099;
+// pink: #f64f7d;

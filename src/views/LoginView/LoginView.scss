@@ -1,0 +1,33 @@
+@import '../../styles/bootstrap-override.scss';
+
+.component-login-view {
+  background-image: url('../../assets/images/sunset.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+
+  .login-container {
+    background-color: black;
+    box-shadow: 0px 3px 9px 2px #cc8e9a4d;
+    width: 90%;
+    max-width: 720px;
+    margin: 200px auto 0;
+    text-align: center;
+    color: white;
+  }
+
+  h1 {
+    font-family: 'La Belle Aurore', cursive;
+    font-size: 50px;
+    color: white;
+    font-weight: 100;
+  }
+
+  .btn-facebook {
+    background-color: $facebook-blue;
+  }
+
+  .btn-google {
+    background-color: $google-blue;
+  }
+}

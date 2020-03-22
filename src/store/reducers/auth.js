@@ -1,5 +1,6 @@
 import {
   SET_AUTHENTICATED_USER,
+  UNSET_AUTHENTICATED_USER,
   SET_INITIAL_AUTH_DONE,
   AUTH_SET_REQUEST_PROCESSING,
   AUTH_SET_REQUEST_ERROR
@@ -20,6 +21,12 @@ const auth = (state = defaultState, action) => {
         ...state,
         user: action.user,
         isAuthenticated: true
+      }
+    case UNSET_AUTHENTICATED_USER:
+      return {
+        ...state,
+        user: {},
+        isAuthenticated: false
       }
     case SET_INITIAL_AUTH_DONE:
       return {
