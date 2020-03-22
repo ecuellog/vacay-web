@@ -1,21 +1,19 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import './SideBarViewContainer.scss';
 import SideBar from '../SideBar/SideBar';
 
 function SideBarViewContainer(props) {
   return (
-    <Container fluid>
-      <Row>
-        <Col xs="2">
+    <div className="container-fluid side-bar-view-container-component">
+      <div className="row">
+        <div className="col-3 col-xl-2 sidebar-container">
           <SideBar></SideBar>
-        </Col>
-        <Col>
+        </div>
+        <div className="col">
           {props.children}
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   );
 }
 
