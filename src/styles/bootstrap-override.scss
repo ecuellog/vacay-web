@@ -1,18 +1,27 @@
 @font-face {
-  font-family: "Lato";
-  src: url("../assets/fonts/Lato/Lato-Regular.ttf") format('truetype');
+  font-family: 'Lato';
+  src: url('../assets/fonts/Lato/Lato-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
 }
 
-// Boostrap variable overrides
-$body-bg: #111219;
-$body-color: #E0E0E0;
+/* Theme */
+$bg-level-1: #111219;
+$bg-level-2: #1A1C2B;
+$bg-level-3: #2B2E44;
 
-$primary: #35B099;
-
+$app-green: #35B099;
+$app-pink: #F64F7D;
+$app-purple: #6929CC;
 $facebook-blue: #3B5998;
 $google-blue: #4285F4;
+/* /Theme */
+
+/* Boostrap variable overrides */
+$body-bg: $bg-level-1;
+$body-color: #E0E0E0;
+
+$primary: $app-green;
 
 $font-family-sans-serif: "Lato";
 
@@ -25,14 +34,34 @@ $btn-padding-x: 1rem;
 $btn-font-size: 0.85rem;
 
 $input-height: unset;
-@import "node_modules/bootstrap/scss/bootstrap";
+$input-bg: #333750;
+$input-border-color: #333750;
+$input-color: #f8f9fa;
+$input-placeholder-color: #adb5bd;
+
+// Modals
+$modal-content-bg: $bg-level-2;
+$modal-backdrop-opacity: 0.7;
+$modal-dialog-margin-y-sm-up: 5rem;
+/* /Bootstrap variable overrides */
+
+
+@import 'node_modules/bootstrap/scss/bootstrap';
 
 .btn {
   text-transform: uppercase;
   letter-spacing: 0.05rem;
 }
 
-// Colors that may become useful
-// purple: #6929CC;
-// green: #35B099;
-// pink: #f64f7d;
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px $input-bg;
+  -webkit-text-fill-color: $input-color;
+}

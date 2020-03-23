@@ -5,7 +5,9 @@ import Logo from '../../assets/images/logov2_200x200.png';
 function NavBar(props) {
   return (
     <div className="component-nav-bar">
-      <img src={Logo}></img>
+      <div className="container-fluid">
+        <img src={Logo}></img>
+      </div>
     </div>
   );
 }

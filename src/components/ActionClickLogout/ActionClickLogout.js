@@ -9,7 +9,7 @@ function ActionClickLogout(props) {
   }
 
   return (
-    <a href="#" className="component-logout" onClick={handleClick}>
+    <a href="#" className={props.className} onClick={handleClick}>
       Logout
     </a>
   );

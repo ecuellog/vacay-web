@@ -1,0 +1,13 @@
+.container-tab-list {
+  position: relative;
+  height: 100%;
+
+  .btn-float-action {
+    position: absolute;
+    bottom: 25px;
+    right: 10px;
+    padding: 13px 20px;
+    border-radius: 50%;
+    font-size: 24px;
+  }
+}

@@ -1,7 +1,10 @@
+@import '../../styles/bootstrap-override.scss';
+
 .component-nav-bar{
-  background-color: #2B2E44;
+  background-color: $bg-level-3;
   img {
     width: 125px;
     padding: 5px 10px;
+    margin-left: -15px;
   }
 }
