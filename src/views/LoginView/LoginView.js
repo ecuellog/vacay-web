@@ -82,7 +82,7 @@ class LoginView extends React.Component {
   }
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
   return {
     authenticateUser: (email, password) => dispatch(authenticateUser(email, password))
   }

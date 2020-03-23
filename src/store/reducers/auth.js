@@ -21,30 +21,30 @@ const auth = (state = defaultState, action) => {
         ...state,
         user: action.user,
         isAuthenticated: true
-      }
+      };
     case UNSET_AUTHENTICATED_USER:
       return {
         ...state,
         user: {},
         isAuthenticated: false
-      }
+      };
     case SET_INITIAL_AUTH_DONE:
       return {
         ...state,
         initialAuthDone: action.value
-      }
+      };
     case AUTH_SET_REQUEST_PROCESSING:
       return {
         ...state,
         requestProcessing: action.value
-      }
+      };
     case AUTH_SET_REQUEST_ERROR:
       return {
         ...state,
         requestError: action.error
-      }
+      };
     default:
-      return state
+      return state;
   }
 }
 
