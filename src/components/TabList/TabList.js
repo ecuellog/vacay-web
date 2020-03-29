@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchCreatedTabs } from '../../store/actions/tabs';
+import { fetchCreatedTabs, createTab } from '../../store/actions/tabs';
 import { connect } from 'react-redux';
 import TabItem from '../TabItem/TabItem';
 import { Modal } from 'react-bootstrap';
@@ -9,18 +9,20 @@ class TabList extends React.Component {
   constructor(props) {
     super(props);
 
-
-    this.state = {
+    this.defaultState = {
       showCreateModal: false,
       persons: [this.props.currentUserName],
       newPerson: '',
       tabName: ''
     }
 
+    this.state = {...this.defaultState};
+
     this.handleInput = this.handleInput.bind(this);
     this.handleCreateModalClose = this.handleCreateModalClose.bind(this);
     this.handleCreateModalShow = this.handleCreateModalShow.bind(this);
     this.handleAddPerson = this.handleAddPerson.bind(this);
+    this.handleCreateTab = this.handleCreateTab.bind(this);
   }
 
   componentDidMount() {
@@ -33,8 +35,7 @@ class TabList extends React.Component {
 
   handleCreateModalClose() {
     this.setState({
-     ...this.state,
-     showCreateModal: false
+     ...this.defaultState
     });
   }
 
@@ -53,13 +54,24 @@ class TabList extends React.Component {
       newPerson: ''
     }));
   }
+
+  handleCreateTab(e) {
+    e.preventDefault();
+    let tab = {
+      name: this.state.tabName,
+      persons: this.state.persons
+    }
+    this.props.createTab(tab);
+    this.handleCreateModalClose();
+  }
   
   render() {
     const {
       handleCreateModalClose,
       handleCreateModalShow,
       handleAddPerson,
-      handleInput
+      handleInput,
+      handleCreateTab
     } = this;
     const { showCreateModal, persons, newPerson, tabName } = this.state;
     return (
@@ -69,7 +81,10 @@ class TabList extends React.Component {
             <TabItem tab={tab} key={tab._id}/>
           )}
         </div>
-        <button className="btn btn-primary btn-float-action" onClick={handleCreateModalShow}>
+        <button
+          className="btn btn-primary btn-float-action"
+          onClick={handleCreateModalShow}
+        >
           <i className="fas fa-plus"></i>
         </button>
 
@@ -90,8 +105,16 @@ class TabList extends React.Component {
                     <span key={index}>{person}</span>
                   )}
                 </div>
-                <button type="button" className="btn btn-primary float-right mt-5">Save</button>
-                <button type="button" className="btn btn-secondary float-right mt-5 mr-3">Cancel</button>
+                <button
+                  type="button"
+                  className="btn btn-primary float-right mt-5"
+                  onClick={handleCreateTab}
+                >Save</button>
+                <button
+                  type="button"
+                  className="btn btn-secondary float-right mt-5 mr-3"
+                  onClick={handleCreateModalClose}
+                >Cancel</button>
               </div>
             </form>
           </Modal.Body>
@@ -103,7 +126,8 @@ class TabList extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchCreatedTabs: () => dispatch(fetchCreatedTabs())
+    fetchCreatedTabs: () => dispatch(fetchCreatedTabs()),
+    createTab: (tab) => dispatch(createTab(tab))
   }
 }
 

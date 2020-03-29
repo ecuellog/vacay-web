@@ -1,5 +1,6 @@
 import {
   SET_TAB_LIST,
+  ADD_TAB,
   TABS_SET_REQUEST_PROCESSING,
   TABS_SET_REQUEST_ERROR
 } from '../actions/tabs';
@@ -17,6 +18,12 @@ const tabs = (state = defaultState, action) => {
         ...state,
         tabs: action.tabs
       };
+    case ADD_TAB: {
+      return {
+        ...state,
+        tabs: [...state.tabs, action.tab]
+      };
+    }
     case TABS_SET_REQUEST_PROCESSING:
       return {
         ...state,
