@@ -6,8 +6,7 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setTokenAuthenticatedUser } from './store/actions/auth';
-
-// Components
+import { toast } from 'react-toastify';
 import SideBarViewWrapper from './components/SideBarViewContainer/SideBarViewContainer';
 import LoginView from './views/LoginView/LoginView';
 import TabsView from './views/TabsView';
@@ -17,6 +16,20 @@ import SettingsView from './views/SettingsView';
 import './App.css';
 import ViewWrapperAuthenticated from './components/ViewWrapperAuthenticated';
 import ViewWrapperUnauthenticated from './components/ViewWrapperUnauthenticated';
+
+toast.configure({
+  position: "top-center",
+  autoClose: 5000,
+  hideProgressBar: true,
+  newestOnTop: true,
+  closeOnClick: true,
+  rtl: false,
+  pauseOnVisibilityChange: true,
+  draggable: true,
+  draggablePercent: 60,
+  pauseOnHover: true,
+  closeButton: false
+});
 
 class App extends React.Component {
   constructor(props) {

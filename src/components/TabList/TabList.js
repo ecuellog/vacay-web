@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import TabItem from '../TabItem/TabItem';
 import { Modal } from 'react-bootstrap';
 import './TabList.scss';
+import { toast } from 'react-toastify';
 
 class TabList extends React.Component {
   constructor(props) {
@@ -63,6 +64,7 @@ class TabList extends React.Component {
     }
     this.props.createTab(tab);
     this.handleCreateModalClose();
+    toast('Tab successfully created!');
   }
   
   render() {

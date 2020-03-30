@@ -1,0 +1,33 @@
+@import '../node_modules/react-toastify/dist/ReactToastify.css';
+@import './bootstrap-override.scss';
+
+$bg-success: $primary;
+$font-success: #114A3D;
+$bg-error: #F77D7F;
+$font-error: #70070A;
+$bg-warning: #FAC669;
+$font-warning: #633002;
+
+
+.Toastify__toast {
+  min-height: 50px;
+  font-family: Lato;
+  padding: 8px 12px;
+}
+
+.Toastify__toast--success,
+.Toastify__toast--default {
+  background-color: $bg-success;
+  color: $font-success;
+}
+
+.Toastify__toast--error {
+  background-color: $bg-success;
+  color: $font-success;
+}
+
+
+.Toastify__toast--warning {
+  background-color: $bg-success;
+  color: $font-success;
+}
