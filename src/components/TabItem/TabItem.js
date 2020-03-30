@@ -1,15 +1,20 @@
 import React from 'react';
 import './TabItem.scss';
 import moment from 'moment';
+import { setSelectedTab } from '../../store/actions/tabs';
+import { connect } from 'react-redux';
 class TabItem extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    let { tab } = this.props;
+    const { tab, setSelectedTab } = this.props;
     return (
-      <div className="component-tab-item p-3 mb-3">
+      <div
+        className="component-tab-item p-3 mb-3"
+        onClick={() => setSelectedTab(tab._id)}
+      >
         <div>
           <h5 className="tab-name">{tab.name}</h5>
           <p className="tab-persons mb-0"> {tab.persons.length} persons in this tab </p>
@@ -25,4 +30,10 @@ class TabItem extends React.Component {
   }
 }
 
-export default TabItem;
+function mapDispatchToProps(dispatch) {
+  return {
+    setSelectedTab: (tabId) => dispatch(setSelectedTab(tabId))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(TabItem);
