@@ -11,6 +11,10 @@
   &:hover {
     cursor: pointer;
   }
+  &.active {
+    background-color: $bg-level-2;
+    box-shadow: inset 0px 0px 10px 0px #00000038;
+  }
 
   .tab-name {
     font-size: 15px;

@@ -22,13 +22,16 @@ class TabDetails extends React.Component {
       <div>
         { tab !== null &&
           <div
-            className="component-tab-details p-3 mb-3"
+            className="component-tab-details p-2 mb-3"
           >
             <h2 className="mb-0">{ tab.name }</h2>
             <p className="created-on">Created on { moment(tab.createdAt).format('MMM D, YYYY') }</p>
 
             {/* Balances */}
-            <h4 className="mt-4">Balances</h4>
+            <div className="mt-4 mb-3 d-flex justify-content-between align-items-baseline">
+              <h4>Balances</h4>
+              <button className="btn btn-outline-primary btn-sm">Add Person</button>
+            </div>
             { balance && tab.persons.map(person => (
                 <div className="d-flex justify-content-between mb-2" key={person}>
                   <p>{ person }</p>
@@ -42,6 +45,16 @@ class TabDetails extends React.Component {
               { balance && 
                 <h4>${ balance.total }</h4>
               }
+            </div>
+
+            {/* Action Buttons */}
+            <div className="row mt-4">
+              <div className="col-xl-6 text-center">
+                <button className="btn btn-block btn-primary">View Details</button>
+              </div>
+              <div className="col-xl-6 text-center">
+                <button className="btn btn-block btn-primary">Add Transaction</button>
+              </div>
             </div>
           </div>
         }

@@ -3,16 +3,20 @@ import './TabItem.scss';
 import moment from 'moment';
 import { setSelectedTab } from '../../store/actions/tabs';
 import { connect } from 'react-redux';
+import * as _ from 'lodash';
 class TabItem extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { tab, setSelectedTab } = this.props;
+    const { tab, setSelectedTab, selectedTab } = this.props;
     return (
       <div
-        className="component-tab-item p-3 mb-3"
+        className={`
+          component-tab-item p-3 mb-3
+          ${tab._id === _.get(selectedTab, "_id") ? "active": ""}
+        `}
         onClick={() => setSelectedTab(tab._id)}
       >
         <div>
@@ -36,4 +40,10 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(TabItem);
+function mapStateToProps(state) {
+  return {
+    selectedTab: state.tabs.selectedTab
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TabItem);
