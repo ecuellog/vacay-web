@@ -30,8 +30,8 @@ class TabList extends React.Component {
     this.props.fetchCreatedTabs();
   }
 
-  handleInput(event) {
-    this.setState({ [event.target.name]: event.target.value });
+  handleInput(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   handleCreateModalClose() {

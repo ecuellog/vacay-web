@@ -66,10 +66,21 @@ export function fetchTransactions(tabId) {
 }
 
 export function createTransaction(transaction) {
-  return function(dispatch) {
+  return function(dispatch, getState) {
     dispatch(setRequestProcessing(true));
     return TransactionsService.create(transaction)
-      .then((res) => dispatch(addTransaction(res.data.transaction)))
+      .then((res) => {
+        const selectedTab = getState().tabs.selectedTab;
+        
+        if(selectedTab._id === transaction.ledgerId) {
+          dispatch(addTransaction(res.data.transaction));
+          const balances = Calculator.balances(
+            res.data.transactions,
+            selectedTab.persons
+          );
+          dispatch(setTabBalance(balances));
+        }
+      })
       .catch((error) => {
         dispatch(setRequestError(error));
         console.error(error);

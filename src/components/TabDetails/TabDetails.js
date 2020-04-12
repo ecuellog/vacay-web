@@ -4,10 +4,18 @@ import { fetchTransactions } from '../../store/actions/transactions';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
+import ModalTransactionAdd from '../ModalTransactionAdd/ModalTransactionAdd';
 
 class TabDetails extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      showTransactionAddModal: false
+    }
+
+    this.handleTransactionAddModalClose = this.handleTransactionAddModalClose.bind(this);
+    this.handleTransactionAddModalOpen = this.handleTransactionAddModalOpen.bind(this);
   }
 
   componentDidUpdate(prevProp, prevState) {
@@ -16,8 +24,28 @@ class TabDetails extends React.Component {
     }
   }
 
+  handleTransactionAddModalClose() {
+    this.setState({
+      ...this.state,
+      showTransactionAddModal: false
+    })
+  }
+
+  handleTransactionAddModalOpen() {
+    console.log('asdfsdaf');
+    this.setState({
+      ...this.state,
+      showTransactionAddModal: true
+    })
+  }
+
   render() {
     const { tab, balance } = this.props;
+    const { showTransactionAddModal } = this.state;
+    const {
+      handleTransactionAddModalClose,
+      handleTransactionAddModalOpen
+    } = this;
     return (
       <div>
         { tab !== null &&
@@ -53,9 +81,19 @@ class TabDetails extends React.Component {
                 <button className="btn btn-block btn-primary">View Details</button>
               </div>
               <div className="col-xl-6 text-center">
-                <button className="btn btn-block btn-primary">Add Transaction</button>
+                <button
+                  className="btn btn-block btn-primary"
+                  onClick={handleTransactionAddModalOpen}
+                >Add Transaction</button>
               </div>
             </div>
+
+            {/* Create Transaction */}
+            <ModalTransactionAdd
+              showModal={showTransactionAddModal}
+              handleModalClose={handleTransactionAddModalClose}
+              tabId={tab._id}
+            ></ModalTransactionAdd>
           </div>
         }
       </div>
