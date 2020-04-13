@@ -1,0 +1,46 @@
+@import '../../styles/bootstrap-override.scss';
+
+.input-dropdown-select-component {
+  position: relative;
+
+  .dropdown-input {
+    display: flex !important;
+    align-items: center;
+  }
+
+  input {
+    background-color: transparent;
+    color: inherit;
+    border: none;
+    flex-grow: 1;
+    padding: 0;
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  i {
+    cursor: pointer;
+  }
+
+  .dropdown {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+
+    ul {
+      background-color: $bg-level-3;
+      list-style: none;
+      margin: 0;
+      padding: 0
+    }
+    li {
+      padding: 0.3rem 1rem;
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: $bg-level-1;
+      }
+    }
+  }
+}
