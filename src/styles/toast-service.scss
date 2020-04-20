@@ -22,12 +22,12 @@ $font-warning: #633002;
 }
 
 .Toastify__toast--error {
-  background-color: $bg-success;
-  color: $font-success;
+  background-color: $bg-error;
+  color: $font-error;
 }
 
 
 .Toastify__toast--warning {
-  background-color: $bg-success;
-  color: $font-success;
+  background-color: $bg-warning;
+  color: $font-warning;
 }

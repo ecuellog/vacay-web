@@ -92,7 +92,7 @@ class TabDetails extends React.Component {
             <ModalTransactionAdd
               showModal={showTransactionAddModal}
               handleModalClose={handleTransactionAddModalClose}
-              tabId={tab._id}
+              tab={tab}
             ></ModalTransactionAdd>
           </div>
         }

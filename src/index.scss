@@ -8,3 +8,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.clickable {
+  cursor: pointer;
+}
+
+.non-clickable {
+  cursor: not-allowed;
+}

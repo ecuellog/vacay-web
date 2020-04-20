@@ -7,10 +7,6 @@ import { toast } from 'react-toastify';
 import DotNav from '../DotNav/DotNav';
 import InputDropdownSelect from '../InputDropdownSelect/InputDropdownSelect';
 
-// TODOS:
-// Add whoPaid, whoBenefited fields
-// Add sliding steps
-
 class ModalTransactionAdd extends React.Component {
   constructor(props) {
     super(props);
@@ -20,13 +16,15 @@ class ModalTransactionAdd extends React.Component {
       date: '',
       currency: '',
       amount: 0,
-      whopaid: 'asdf',
+      whoPaid: [],
+      whoPaidInput: '',
       currentDotLink: 'step1'
     }
 
     this.handleInput = this.handleInput.bind(this);
     this.handleCreateTransaction = this.handleCreateTransaction.bind(this); 
     this.handleChangeStep = this.handleChangeStep.bind(this);
+    this.addWhoPaid = this.addWhoPaid.bind(this);
   }
 
   handleInput(event) {
@@ -39,9 +37,9 @@ class ModalTransactionAdd extends React.Component {
       name: this.state.title,
       date: this.state.date,
       amount: this.state.amount,
-      ledger: this.props.tabId
+      ledger: this.props.tab._id
     }
-    this.props.createTransaction(transaction);
+    this.props.createTransaction(this.props.tab, transaction);
     this.props.handleModalClose();
     toast('Transaction created!');
   }
@@ -52,10 +50,25 @@ class ModalTransactionAdd extends React.Component {
     });
   }
 
+  addWhoPaid(person) {
+    if(this.state.whoPaid.includes(person)) {
+      toast.error('Cannot add same person twice');
+      return;
+    }
+    this.setState({
+      whoPaid: [...this.state.whoPaid, person]
+    })
+  }
+
+  addNewWhoPaid() {
+    //TODO
+    return;
+  }
+
   render() {
-    const { showModal, handleModalClose } = this.props;
-    const { title, date, currency, amount, whopaid, currentDotLink } = this.state;
-    const { handleInput, handleCreateTransaction, handleChangeStep } = this;
+    const { showModal, handleModalClose, tab } = this.props;
+    const { title, date, currency, amount, whoPaid, whoPaidInput, currentDotLink } = this.state;
+    const { handleInput, handleCreateTransaction, handleChangeStep, addNewWhoPaid, addWhoPaid } = this;
     return (
       <Modal show={showModal} onHide={handleModalClose}>
         <Modal.Body>
@@ -113,9 +126,21 @@ class ModalTransactionAdd extends React.Component {
               <>
                 <div className="form-group">
                   <label className="mb-0">Who Paid?</label>
-                  <InputDropdownSelect/>
+                  <InputDropdownSelect
+                    optionList={tab.persons.filter((person) => !whoPaid.includes(person))}
+                    value={whoPaidInput}
+                    onValueChange={(value) => this.setState({whoPaidInput: value})}
+                    actionOption={true}
+                    actionOptionString={`Add new person "${whoPaidInput}"`}
+                    actionOptionClicked={addNewWhoPaid}
+                    onSelect={(person) => addWhoPaid(person)}
+                    emptyListMessage={'-- No more persons in tab --'}
+                  />
                 </div>
                 <div className="persons-paid">
+                  { whoPaid.map((person) => (
+                    <p key={person}>{person}</p>
+                  ))}
                 </div>
               </>
             }
@@ -171,7 +196,7 @@ class ModalTransactionAdd extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addTransactions: (tabId, transaction) => dispatch(createTransaction(tabId, transaction))
+    createTransaction: (tabId, transaction) => dispatch(createTransaction(tabId, transaction))
   }
 }
 

@@ -13,6 +13,7 @@ function DotNav(props) {
         <ul>
           {props.links.map(link => (
             <li
+              key={link}
               className={link === props.currentLink ? "current":""}
             >
               <a
