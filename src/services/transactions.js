@@ -6,4 +6,11 @@ export default class TabsService {
       { withCredentials: true }
     );
   }
+
+  static create(transaction) {
+    return api.post(`/api/ledgers/${transaction.ledger}/transactions`,
+      transaction,
+      { withCredentials: true }
+    );
+  }
 }

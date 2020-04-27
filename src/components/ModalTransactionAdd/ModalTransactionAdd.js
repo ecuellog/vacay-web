@@ -6,25 +6,34 @@ import { Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import DotNav from '../DotNav/DotNav';
 import InputDropdownSelect from '../InputDropdownSelect/InputDropdownSelect';
+import * as _ from 'lodash';
 
 class ModalTransactionAdd extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.defaultState = {
       title: '',
       date: '',
       currency: '',
-      amount: 0,
+      amount: 0.00,
       whoPaid: [],
       whoPaidInput: '',
+      whoBenefited: [...this.props.tab.persons],
+      whoBenefitedInput: '',
       currentDotLink: 'step1'
     }
+
+    this.state = _.cloneDeep(this.defaultState);
 
     this.handleInput = this.handleInput.bind(this);
     this.handleCreateTransaction = this.handleCreateTransaction.bind(this); 
     this.handleChangeStep = this.handleChangeStep.bind(this);
     this.addWhoPaid = this.addWhoPaid.bind(this);
+    this.addNewWhoPaid = this.addNewWhoPaid.bind(this);
+    this.addWhoBenefited = this.addWhoBenefited.bind(this);
+    this.addNewWhoBenefited = this.addNewWhoBenefited.bind(this);
+    this.cancel = this.cancel.bind(this);
   }
 
   handleInput(event) {
@@ -33,15 +42,22 @@ class ModalTransactionAdd extends React.Component {
 
   handleCreateTransaction(e) {
     e.preventDefault();
+
+    let dollars = parseFloat(this.state.amount).toFixed(0);
+    let cents = (parseFloat(this.state.amount) - dollars).toFixed(2) * 100;
+
     let transaction = {
       name: this.state.title,
       date: this.state.date,
-      amount: this.state.amount,
-      ledger: this.props.tab._id
+      amountDollars: dollars,
+      amountCents: cents,
+      ledger: this.props.tab._id,
+      whoPaid: this.state.whoPaid,
+      whoBenefited: this.state.whoBenefited
     }
-    this.props.createTransaction(this.props.tab, transaction);
-    this.props.handleModalClose();
-    toast('Transaction created!');
+    this.props.createTransaction(transaction);
+    toast(`Transaction for $${this.state.amount} added!`);
+    this.cancel();
   }
 
   handleChangeStep(link) {
@@ -61,14 +77,48 @@ class ModalTransactionAdd extends React.Component {
   }
 
   addNewWhoPaid() {
-    //TODO
-    return;
+    if(this.state.whoPaid.includes(this.state.whoPaidInput)) {
+      toast.error('This name is already on the list');
+      return;
+    }
+    this.setState({
+      whoPaid: [...this.state.whoPaid, "(new)" + this.state.whoPaidInput]
+    });
+  }
+
+  addWhoBenefited(person) {
+    if(this.state.whoBenefited.includes(person)) {
+      toast.error('Cannot add same person twice');
+      return;
+    }
+    this.setState({
+      whoBenefited: [...this.state.whoBenefited, person]
+    })
+  }
+
+  addNewWhoBenefited() {
+    if(this.state.whoBenefited.includes(this.state.whoBenefitedInput)) {
+      toast.error('This name is already on the list');
+      return;
+    }
+    this.setState({
+      whoBenefited: [...this.state.whoBenefited, "(new)" + this.state.whoBenefitedInput]
+    });
+  }
+
+  cancel() {
+    this.props.handleModalClose();
+    setTimeout(
+      () => this.setState({
+        ...this.defaultState
+      })
+    , 200);
   }
 
   render() {
     const { showModal, handleModalClose, tab } = this.props;
-    const { title, date, currency, amount, whoPaid, whoPaidInput, currentDotLink } = this.state;
-    const { handleInput, handleCreateTransaction, handleChangeStep, addNewWhoPaid, addWhoPaid } = this;
+    const { title, date, currency, amount, whoPaid, whoPaidInput, whoBenefited, whoBenefitedInput, currentDotLink } = this.state;
+    const { handleInput, handleCreateTransaction, handleChangeStep, addNewWhoPaid, addWhoPaid, addNewWhoBenefited, addWhoBenefited } = this;
     return (
       <Modal show={showModal} onHide={handleModalClose}>
         <Modal.Body>
@@ -89,6 +139,7 @@ class ModalTransactionAdd extends React.Component {
                     onChange={handleInput}
                   ></input>
                   {/*
+                  TODO: Add currency to app
                   <label className="mb-0">Currency</label>
                   <input
                     type="text"
@@ -99,12 +150,15 @@ class ModalTransactionAdd extends React.Component {
                     onChange={handleInput}
                   ></input>
                   */}
-                  <label className="mb-0">Amount ($CAD)</label>
+                  <label className="mb-0">Amount ($USD)</label>
                   <input
                     type="number"
+                    min="0.00"
+                    max="100000.00"
+                    step="any"
                     className="form-control mb-3"
                     name="amount"
-                    placeholder="Expensive Dinner"
+                    placeholder="0.00"
                     value={amount}
                     onChange={handleInput}
                   ></input>
@@ -132,7 +186,7 @@ class ModalTransactionAdd extends React.Component {
                     onValueChange={(value) => this.setState({whoPaidInput: value})}
                     actionOption={true}
                     actionOptionString={`Add new person "${whoPaidInput}"`}
-                    actionOptionClicked={addNewWhoPaid}
+                    onActionOptionSelect={addNewWhoPaid}
                     onSelect={(person) => addWhoPaid(person)}
                     emptyListMessage={'-- No more persons in tab --'}
                   />
@@ -145,8 +199,32 @@ class ModalTransactionAdd extends React.Component {
               </>
             }
 
+            {/* Step 3 */}
+            { currentDotLink === 'step3' && 
+              <>
+                <div className="form-group">
+                  <label className="mb-0">Who Benefited?</label>
+                  <InputDropdownSelect
+                    optionList={tab.persons.filter((person) => !whoBenefited.includes(person))}
+                    value={whoBenefitedInput}
+                    onValueChange={(value) => this.setState({whoBenefitedInput: value})}
+                    actionOption={true}
+                    actionOptionString={`Add new person "${whoBenefitedInput}"`}
+                    onActionOptionSelect={addNewWhoBenefited}
+                    onSelect={(person) => addWhoBenefited(person)}
+                    emptyListMessage={'-- No more persons in tab --'}
+                  />
+                </div>
+                <div className="persons-benefited">
+                  { whoBenefited.map((person) => (
+                    <p key={person}>{person}</p>
+                  ))}
+                </div>
+              </>
+            }
+
             <DotNav
-              links={["step1", "step2"]}
+              links={["step1", "step2", "step3"]}
               currentLink={currentDotLink}
               handleLinkClick={handleChangeStep}
             />
@@ -162,7 +240,7 @@ class ModalTransactionAdd extends React.Component {
                 <button
                   type="button"
                   className="btn btn-secondary float-right mt-4 mr-3"
-                  onClick={handleModalClose}
+                  onClick={this.cancel}
                 >Cancel</button>
               </div>
             }
@@ -183,7 +261,28 @@ class ModalTransactionAdd extends React.Component {
                 <button
                   type="button"
                   className="btn btn-secondary float-right mt-4 mr-3"
-                  onClick={handleModalClose}
+                  onClick={this.cancel}
+                >Cancel</button>
+              </div>
+            }
+
+            {/* Step 3 Buttons */}
+            { currentDotLink === 'step3' && 
+              <div>
+                <button
+                  type="button"
+                  className="btn btn-primary float-left mt-4"
+                  onClick={() => handleChangeStep('step2')}
+                >Back</button>
+                <button
+                  type="button"
+                  className="btn btn-primary float-right mt-4"
+                  onClick={handleCreateTransaction}
+                >Done</button>
+                <button
+                  type="button"
+                  className="btn btn-secondary float-right mt-4 mr-3"
+                  onClick={this.cancel}
                 >Cancel</button>
               </div>
             }

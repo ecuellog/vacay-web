@@ -16,10 +16,10 @@ function setTransactionList(transactions) {
   }
 }
 
-function addTransaction(transactions) {
+function addTransaction(transaction) {
   return {
     type: ADD_TRANSACTION,
-    transactions
+    transaction
   }
 }
 
@@ -72,12 +72,12 @@ export function createTransaction(transaction) {
       .then((res) => {
         const selectedTab = getState().tabs.selectedTab;
         
-        if(selectedTab._id === transaction.ledgerId) {
-          dispatch(addTransaction(res.data.transaction));
+        if(selectedTab._id === transaction.ledger) {
           const balances = Calculator.balances(
-            res.data.transactions,
+            [...getState().transactions.transactions, res.data.transaction],
             selectedTab.persons
           );
+          dispatch(addTransaction(res.data.transaction));
           dispatch(setTabBalance(balances));
         }
       })

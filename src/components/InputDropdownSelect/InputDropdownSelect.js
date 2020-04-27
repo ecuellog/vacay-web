@@ -15,6 +15,7 @@ class InputDropdownSelect extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAnyClick = this.handleAnyClick.bind(this);
     this.handleOptionSelect = this.handleOptionSelect.bind(this);
+    this.handleActionOptionSelect = this.handleActionOptionSelect.bind(this);
   }
 
   handleInputChange(e) {
@@ -38,8 +39,14 @@ class InputDropdownSelect extends React.Component {
 
   handleOptionSelect(option) {
     this.setState({showDropdown: false});
-    this.props.onValueChange('');
     this.props.onSelect(option);
+    this.props.onValueChange('');
+  }
+
+  handleActionOptionSelect() {
+    this.setState({showDropdown: false});
+    this.props.onActionOptionSelect();
+    this.props.onValueChange('');
   }
 
   render() {
@@ -56,7 +63,7 @@ class InputDropdownSelect extends React.Component {
           <div className="dropdown">
             <ul>
               { this.props.actionOption && this.props.value &&
-                <li className="clickable" onClick={this.props.actionOptionClicked}>
+                <li className="clickable" onClick={this.handleActionOptionSelect}>
                   { this.props.actionOptionString }
                 </li>
               }

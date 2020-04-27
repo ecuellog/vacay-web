@@ -32,7 +32,6 @@ class TabDetails extends React.Component {
   }
 
   handleTransactionAddModalOpen() {
-    console.log('asdfsdaf');
     this.setState({
       ...this.state,
       showTransactionAddModal: true
