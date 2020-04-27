@@ -49,7 +49,7 @@ class TabDetails extends React.Component {
       <div>
         { tab !== null &&
           <div
-            className="component-tab-details p-2 mb-3"
+            className="component-tab-details px-3 py-2 mb-3"
           >
             <h2 className="mb-0">{ tab.name }</h2>
             <p className="created-on">Created on { moment(tab.createdAt).format('MMM D, YYYY') }</p>
@@ -75,11 +75,11 @@ class TabDetails extends React.Component {
             </div>
 
             {/* Action Buttons */}
-            <div className="row mt-4">
-              <div className="col-xl-6 text-center">
+            <div className="row no-gutters mt-4">
+              <div className="col-6 text-center pr-2">
                 <button className="btn btn-block btn-primary">View Details</button>
               </div>
-              <div className="col-xl-6 text-center">
+              <div className="col-6 text-center pl-2">
                 <button
                   className="btn btn-block btn-primary"
                   onClick={handleTransactionAddModalOpen}

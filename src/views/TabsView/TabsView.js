@@ -10,11 +10,11 @@ class TabsView extends React.Component {
   
   render() {
     return (
-      <div className="container-tabs-view row">
-        <div className="col-8">
+      <div className="container-tabs-view d-flex">
+        <div className="flex-grow-1">
           <TabList/>
         </div>
-        <div className="tab-info my-3 col-4">
+        <div className="tab-info my-3 d-none d-xl-block">
           <TabDetails/>
         </div>
       </div>
