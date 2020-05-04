@@ -87,3 +87,16 @@ export function createTab(tab) {
       .then(() => dispatch(setRequestProcessing(false)))
   }
 }
+
+export function getTab(tabId) {
+  return function(dispatch) {
+    dispatch(setRequestProcessing(true));
+    return TabsService.get(tabId)
+      .then((res) => dispatch(setSelectedTab(res.data.ledger)))
+      .catch((error) => {
+        dispatch(setRequestError(error));
+        console.error(error);
+      })
+      .then(() => dispatch(setRequestProcessing(false)))
+  }
+}

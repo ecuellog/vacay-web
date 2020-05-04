@@ -13,4 +13,10 @@ export default class TabsService {
       { withCredentials: true }
     );
   }
+
+  static get(tabId) {
+    return api.get(`/api/ledgers/${tabId}`, 
+      { withCredentials: true }
+    )
+  }
 }

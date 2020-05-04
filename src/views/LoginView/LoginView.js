@@ -26,12 +26,6 @@ class LoginView extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if(prevProps.isAuthenticated) {
-      this.props.history.push("/tabs");
-    }
-  }
-
   render() {
     const {email, password} = this.state;
     return (

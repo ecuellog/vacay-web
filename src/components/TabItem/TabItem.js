@@ -3,21 +3,33 @@ import './TabItem.scss';
 import moment from 'moment';
 import { setSelectedTabFromList } from '../../store/actions/tabs';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import * as _ from 'lodash';
 class TabItem extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleTabItemClick = this.handleTabItemClick.bind(this);
+  }
+
+  handleTabItemClick(tabId) {
+    if(tabId === _.get(this.props.selectedTab, '_id')) {
+      this.props.history.push(`/tabs/${tabId}`);
+    } else {
+      console.log(tabId);
+      this.props.setSelectedTabFromList(tabId);
+    }
   }
 
   render() {
-    const { tab, setSelectedTabFromList, selectedTab } = this.props;
+    const { tab, selectedTab } = this.props;
     return (
       <div
         className={`
           component-tab-item p-3 mb-3
           ${tab._id === _.get(selectedTab, "_id") ? "active": ""}
         `}
-        onClick={() => setSelectedTabFromList(tab._id)}
+        onClick={() => this.handleTabItemClick(tab._id)}
       >
         <div>
           <h5 className="tab-name">{tab.name}</h5>
@@ -46,4 +58,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TabItem);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TabItem));

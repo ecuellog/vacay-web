@@ -12,6 +12,7 @@ import TabsView from './views//TabsView/TabsView';
 import SharedTabsView from './views/SharedTabsView';
 import FriendsView from './views/FriendsView';
 import SettingsView from './views/SettingsView';
+import TabDetailView from './views/TabDetailView/TabDetailView';
 import './App.css';
 import ViewWrapperAuthenticated from './components/ViewWrapperAuthenticated';
 import ViewWrapperUnauthenticated from './components/ViewWrapperUnauthenticated';
@@ -48,7 +49,7 @@ class App extends React.Component {
               <ViewWrapperUnauthenticated path="/login">
                 <LoginView />
               </ViewWrapperUnauthenticated>
-              <ViewWrapperAuthenticated path="/tabs">
+              <ViewWrapperAuthenticated exact path="/tabs">
                 <TabsView />
               </ViewWrapperAuthenticated>
               <ViewWrapperAuthenticated path="/sharedtabs">
@@ -59,6 +60,11 @@ class App extends React.Component {
               </ViewWrapperAuthenticated>
               <ViewWrapperAuthenticated path="/settings">
                 <SettingsView />
+              </ViewWrapperAuthenticated>
+
+              {/* Tab routes */}
+              <ViewWrapperAuthenticated path="/tabs/:tabId">
+                <TabDetailView />
               </ViewWrapperAuthenticated>
             </Switch>
           </div>
