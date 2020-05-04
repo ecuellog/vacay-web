@@ -2,6 +2,7 @@ import {
   SET_TAB_LIST,
   ADD_TAB,
   SET_SELECTED_TAB,
+  SET_SELECTED_TAB_FROM_LIST,
   SET_TAB_BALANCE,
   TABS_SET_REQUEST_PROCESSING,
   TABS_SET_REQUEST_ERROR
@@ -29,6 +30,12 @@ const tabs = (state = defaultState, action) => {
       };
     }
     case SET_SELECTED_TAB: {
+      return {
+        ...state,
+        selectedTab: action.tab
+      };
+    }
+    case SET_SELECTED_TAB_FROM_LIST: {
       const tab = state.tabs.find(tab => tab._id === action.tabId);
       return {
         ...state,

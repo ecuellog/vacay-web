@@ -3,6 +3,7 @@ import TabsService from '../../services/tabs';
 export const SET_TAB_LIST = 'SET_TAB_LIST';
 export const ADD_TAB = 'ADD_TAB';
 export const SET_SELECTED_TAB = 'SET_SELECTED_TAB';
+export const SET_SELECTED_TAB_FROM_LIST = 'SET_SELECTED_TAB_FROM_LIST';
 export const SET_TAB_BALANCE = 'SET_TAB_BALANCE';
 export const TABS_SET_REQUEST_PROCESSING = 'TABS_SET_REQUEST_PROCESSING';
 export const TABS_SET_REQUEST_ERROR = 'TABS_SET_REQUEST_ERROR';
@@ -22,9 +23,16 @@ function addTab(tab) {
   }
 }
 
-export function setSelectedTab(tabId) {
+export function setSelectedTab(tab) {
   return {
     type: SET_SELECTED_TAB,
+    tab
+  }
+}
+
+export function setSelectedTabFromList(tabId) {
+  return {
+    type: SET_SELECTED_TAB_FROM_LIST,
     tabId
   }
 }
@@ -57,7 +65,7 @@ export function fetchCreatedTabs() {
     return TabsService.getCreated()
       .then((res) => {
         dispatch(setTabList(res.data.ledgers));
-        dispatch(setSelectedTab(res.data.ledgers[0]._id));
+        dispatch(setSelectedTab(res.data.ledgers[0]));
       })
       .catch((error) => {
         dispatch(setRequestError(error));

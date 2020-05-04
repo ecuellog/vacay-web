@@ -1,7 +1,7 @@
 import React from 'react';
 import './TabItem.scss';
 import moment from 'moment';
-import { setSelectedTab } from '../../store/actions/tabs';
+import { setSelectedTabFromList } from '../../store/actions/tabs';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
 class TabItem extends React.Component {
@@ -10,14 +10,14 @@ class TabItem extends React.Component {
   }
 
   render() {
-    const { tab, setSelectedTab, selectedTab } = this.props;
+    const { tab, setSelectedTabFromList, selectedTab } = this.props;
     return (
       <div
         className={`
           component-tab-item p-3 mb-3
           ${tab._id === _.get(selectedTab, "_id") ? "active": ""}
         `}
-        onClick={() => setSelectedTab(tab._id)}
+        onClick={() => setSelectedTabFromList(tab._id)}
       >
         <div>
           <h5 className="tab-name">{tab.name}</h5>
@@ -36,7 +36,7 @@ class TabItem extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setSelectedTab: (tabId) => dispatch(setSelectedTab(tabId))
+    setSelectedTabFromList: (tabId) => dispatch(setSelectedTabFromList(tabId))
   }
 }
 
