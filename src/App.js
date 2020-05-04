@@ -7,7 +7,6 @@ import {
 import { connect } from 'react-redux';
 import { setTokenAuthenticatedUser } from './store/actions/auth';
 import { toast } from 'react-toastify';
-import SideBarViewWrapper from './components/SideBarViewContainer/SideBarViewContainer';
 import LoginView from './views/LoginView/LoginView';
 import TabsView from './views//TabsView/TabsView';
 import SharedTabsView from './views/SharedTabsView';
@@ -50,24 +49,16 @@ class App extends React.Component {
                 <LoginView />
               </ViewWrapperUnauthenticated>
               <ViewWrapperAuthenticated path="/tabs">
-                <SideBarViewWrapper>
-                  <TabsView />
-                </SideBarViewWrapper>
+                <TabsView />
               </ViewWrapperAuthenticated>
               <ViewWrapperAuthenticated path="/sharedtabs">
-                <SideBarViewWrapper>
-                  <SharedTabsView />
-                </SideBarViewWrapper>
+                <SharedTabsView />
               </ViewWrapperAuthenticated>
               <ViewWrapperAuthenticated path="/friends">
-                <SideBarViewWrapper>
-                  <FriendsView />
-                </SideBarViewWrapper>
+                <FriendsView />
               </ViewWrapperAuthenticated>
               <ViewWrapperAuthenticated path="/settings">
-                <SideBarViewWrapper>
-                  <SettingsView />
-                </SideBarViewWrapper>
+                <SettingsView />
               </ViewWrapperAuthenticated>
             </Switch>
           </div>

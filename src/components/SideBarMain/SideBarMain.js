@@ -1,10 +1,10 @@
 import React from 'react';
-import './SideBar.scss';
+import './SideBarMain.scss';
 
 import { NavLink } from 'react-router-dom';
 import ActionClickLogout from '../ActionClickLogout/ActionClickLogout';
 
-function SideBar(props) {
+function SideBarMain(props) {
   return (
     <div className="component-side-bar">
       <NavLink className="link" activeClassName="active" to="/tabs">Your Tabs</NavLink>
@@ -18,4 +18,4 @@ function SideBar(props) {
   );
 }
 
-export default SideBar;
+export default SideBarMain;
