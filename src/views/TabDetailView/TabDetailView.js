@@ -4,6 +4,8 @@ import { getTab } from '../../store/actions/tabs';
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 import './TabDetailView.scss';
+import SideBarTabView from '../../components/SideBarTabView/SideBarTabView';
+import SideBarViewContainerBase from '../../components/SideBarViewContainerBase/SideBarViewContainerBase';
 
 class TabDetailView extends React.Component {
   constructor(props) {
@@ -17,14 +19,16 @@ class TabDetailView extends React.Component {
   
   render() {
     return (
-      <div className="container-tab-detail-view row">
-        <div className="col-6">
-          <TabDetails/>
+      <SideBarViewContainerBase sidebar={<SideBarTabView/>}>
+        <div className="container-tab-detail-view row">
+          <div className="col-6">
+            <TabDetails/>
+          </div>
+          <div className="col-6">
+            <TabDetails/>
+          </div>
         </div>
-        <div className="col-6">
-          <TabDetails/>
-        </div>
-      </div>
+      </SideBarViewContainerBase>
     )
   }
 }

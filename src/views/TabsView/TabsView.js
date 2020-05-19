@@ -1,8 +1,9 @@
 import React from 'react';
 import TabList from '../../components/TabList/TabList';
 import TabDetails from '../../components/TabDetails/TabDetails';
-import SideBarViewContainerMain from '../../components/SideBarViewContainerMain/SideBarViewContainerMain';
+import SideBarViewContainerBase from '../../components/SideBarViewContainerBase/SideBarViewContainerBase';
 import './TabsView.scss';
+import SideBarMain from '../../components/SideBarMain/SideBarMain';
 
 class TabsView extends React.Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class TabsView extends React.Component {
   
   render() {
     return (
-      <SideBarViewContainerMain>
+      <SideBarViewContainerBase sidebar={<SideBarMain/>}>
         <div className="container-tabs-view d-flex">
           <div className="flex-grow-1">
             <TabList/>
@@ -20,7 +21,7 @@ class TabsView extends React.Component {
             <TabDetails/>
           </div>
         </div>
-      </SideBarViewContainerMain>
+      </SideBarViewContainerBase>
     )
   }
 }

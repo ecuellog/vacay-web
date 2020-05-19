@@ -5,5 +5,25 @@
     width: 220px;
     min-height: calc(100vh - 52.438px);
     background-color: $bg-level-2;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .link {
+      color: $gray-500;
+      font-size: 20px;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-left: 3px solid transparent;
+
+      &.active {
+        color: $gray-100;
+        border-left: 3px solid $primary;
+      }
+
+      &:hover {
+        color: $gray-100;
+      }
+    }
   }
 }
