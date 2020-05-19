@@ -1,11 +1,12 @@
 import React from 'react';
-import SideBarViewContainerMain from '../components/SideBarViewContainerMain/SideBarViewContainerMain';
+import SideBarViewContainerBase from '../components/SideBarViewContainerBase/SideBarViewContainerBase';
+import SideBarMain from '../components/SideBarMain/SideBarMain';
 
 
 export default function FriendsView() {
   return (
-    <SideBarViewContainerMain>
+    <SideBarViewContainerBase sidebar={<SideBarMain/>}>
       <h1>FriendsView</h1>
-    </SideBarViewContainerMain>
+    </SideBarViewContainerBase>
   );
 }

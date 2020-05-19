@@ -1,0 +1,42 @@
+@import '../../styles/bootstrap-override.scss';
+
+.TransactionItem {
+  display: flex;
+  justify-content: space-between;
+  background-color: $bg-level-3;
+  color: white;
+  border-left: solid 2px $app-purple;
+  border-radius: 1px;
+  box-shadow: 0px 0px 10px 0px #00000038;
+  &:hover {
+    cursor: pointer;
+  }
+  &.active {
+    background-color: $bg-level-2;
+    box-shadow: inset 0px 0px 10px 0px #00000038;
+  }
+
+  .transaction-name {
+    font-size: 15px;
+    font-weight: bolder;
+    letter-spacing: 1px;
+  }
+  
+  .tab-persons,
+  .tab-modified-at {
+    font-size: 12px;
+    color: #ffffff;
+  }
+  
+  .tab-modified-at {
+    align-self: flex-end;
+  }
+  
+  .options-section {
+    border-left: solid 1px #53566f;
+    .options-icon {
+      padding-left: 20px;
+      padding-right: 5px;
+    }
+  }
+}

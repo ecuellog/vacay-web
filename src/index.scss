@@ -9,10 +9,35 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Utilities */
 .clickable {
   cursor: pointer;
 }
 
 .non-clickable {
   cursor: not-allowed;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: $primary;
+  border-radius: 5px;
+}
+
+/* Buttons */
+.btn-float-action {
+  position: fixed;
+  bottom: 25px;
+  right: 30px;
+  padding: 13px 20px !important;
+  border-radius: 50% !important;
+  font-size: 24px !important;
 }

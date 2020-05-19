@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import './TabDetailView.scss';
 import SideBarTabView from '../../components/SideBarTabView/SideBarTabView';
 import SideBarViewContainerBase from '../../components/SideBarViewContainerBase/SideBarViewContainerBase';
+import TransactionList from '../../components/TransactionList/TransactionList';
 
 class TabDetailView extends React.Component {
   constructor(props) {
@@ -20,12 +21,12 @@ class TabDetailView extends React.Component {
   render() {
     return (
       <SideBarViewContainerBase sidebar={<SideBarTabView/>}>
-        <div className="container-tab-detail-view row">
-          <div className="col-6">
+        <div className="container-tab-detail-view row no-gutters">
+          <div className="col-xl-6 my-3">
             <TabDetails/>
           </div>
-          <div className="col-6">
-            <TabDetails/>
+          <div className="col-6 transaction-list d-none d-xl-block mt-3">
+            <TransactionList/>
           </div>
         </div>
       </SideBarViewContainerBase>

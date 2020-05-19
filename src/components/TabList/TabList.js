@@ -77,7 +77,7 @@ class TabList extends React.Component {
     } = this;
     const { showCreateModal, persons, newPerson, tabName } = this.state;
     return (
-      <div className="container-tab-list p-3">
+      <div className="container-tab-list pt-3 px-3">
         <div>
           { this.props.tabs.map((tab) => 
             <TabItem tab={tab} key={tab._id}/>

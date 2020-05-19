@@ -1,10 +1,11 @@
 import React from 'react';
-import SideBarViewContainerMain from '../components/SideBarViewContainerMain/SideBarViewContainerMain';
+import SideBarViewContainerBase from '../components/SideBarViewContainerBase/SideBarViewContainerBase';
+import SideBarMain from '../components/SideBarMain/SideBarMain';
 
 export default function SettingsView() {
   return (
-    <SideBarViewContainerMain>
+    <SideBarViewContainerBase sidebar={<SideBarMain/>}>
       <h1>SettingsView</h1>
-    </SideBarViewContainerMain>
+    </SideBarViewContainerBase>
   );
 }

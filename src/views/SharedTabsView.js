@@ -1,10 +1,11 @@
 import React from 'react';
-import SideBarViewContainerMain from '../components/SideBarViewContainerMain/SideBarViewContainerMain';
+import SideBarMain from '../components/SideBarMain/SideBarMain';
+import SideBarViewContainerBase from '../components/SideBarViewContainerBase/SideBarViewContainerBase';
 
 export default function SharedTabsView() {
   return (
-    <SideBarViewContainerMain>
+    <SideBarViewContainerBase sidebar={<SideBarMain/>}>
       <h1>SharedTabsView</h1>
-    </SideBarViewContainerMain>
+    </SideBarViewContainerBase>
   );
 }
