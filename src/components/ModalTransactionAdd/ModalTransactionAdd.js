@@ -31,8 +31,10 @@ class ModalTransactionAdd extends React.Component {
     this.handleChangeStep = this.handleChangeStep.bind(this);
     this.addWhoPaid = this.addWhoPaid.bind(this);
     this.addNewWhoPaid = this.addNewWhoPaid.bind(this);
+    this.deletePaid = this.deletePaid.bind(this);
     this.addWhoBenefited = this.addWhoBenefited.bind(this);
     this.addNewWhoBenefited = this.addNewWhoBenefited.bind(this);
+    this.deleteBenefited = this.deleteBenefited.bind(this);
     this.cancel = this.cancel.bind(this);
   }
 
@@ -82,8 +84,16 @@ class ModalTransactionAdd extends React.Component {
       return;
     }
     this.setState({
-      whoPaid: [...this.state.whoPaid, "(new)" + this.state.whoPaidInput]
+      whoPaid: [...this.state.whoPaid, "(New) " + this.state.whoPaidInput]
     });
+  }
+
+  deletePaid(i) {
+    let newWhoPaid = _.cloneDeep(this.state.whoPaid);
+    newWhoPaid.splice(i, 1);
+    this.setState({
+      whoPaid: newWhoPaid
+    })
   }
 
   addWhoBenefited(person) {
@@ -102,8 +112,16 @@ class ModalTransactionAdd extends React.Component {
       return;
     }
     this.setState({
-      whoBenefited: [...this.state.whoBenefited, "(new)" + this.state.whoBenefitedInput]
+      whoBenefited: [...this.state.whoBenefited, "(New) " + this.state.whoBenefitedInput]
     });
+  }
+
+  deleteBenefited(i) {
+    let newWhoBenefited = _.cloneDeep(this.state.whoBenefited);
+    newWhoBenefited.splice(i, 1);
+    this.setState({
+      whoBenefited: newWhoBenefited
+    })
   }
 
   cancel() {
@@ -118,7 +136,7 @@ class ModalTransactionAdd extends React.Component {
   render() {
     const { showModal, handleModalClose, tab } = this.props;
     const { title, date, currency, amount, whoPaid, whoPaidInput, whoBenefited, whoBenefitedInput, currentDotLink } = this.state;
-    const { handleInput, handleCreateTransaction, handleChangeStep, addNewWhoPaid, addWhoPaid, addNewWhoBenefited, addWhoBenefited } = this;
+    const { handleInput, handleCreateTransaction, handleChangeStep, addNewWhoPaid, addWhoPaid, addNewWhoBenefited, addWhoBenefited, deletePaid, deleteBenefited } = this;
     return (
       <Modal show={showModal} onHide={handleModalClose}>
         <Modal.Body>
@@ -192,11 +210,10 @@ class ModalTransactionAdd extends React.Component {
                   />
                 </div>
                 <div className="persons-paid">
-                  { whoPaid.map((person) => (
+                  { whoPaid.map((person, i) => (
                     <div className="person-chip mr-2 my-2" key={person}>
-
                       <span>{person}</span>
-                      <i class="fas fa-times ml-3"></i>
+                      <i className="fas fa-times ml-3" onClick={() => deletePaid(i)}></i>
                     </div>
                   ))}
                 </div>
@@ -206,7 +223,7 @@ class ModalTransactionAdd extends React.Component {
             {/* Step 3 */}
             { currentDotLink === 'step3' && 
               <>
-                <div className="form-group">
+                <div className="form-group mb-1">
                   <label className="mb-0">Who Benefited?</label>
                   <InputDropdownSelect
                     optionList={tab.persons.filter((person) => !whoBenefited.includes(person))}
@@ -220,8 +237,11 @@ class ModalTransactionAdd extends React.Component {
                   />
                 </div>
                 <div className="persons-benefited">
-                  { whoBenefited.map((person) => (
-                    <span key={person}>{person}</span>
+                  { whoBenefited.map((person, i) => (
+                    <div className="person-chip mr-2 my-2" key={person}>
+                      <span>{person}</span>
+                      <i className="fas fa-times ml-3" onClick={() => deleteBenefited(i)}></i>
+                    </div>
                   ))}
                 </div>
               </>
