@@ -178,7 +178,7 @@ class ModalTransactionAdd extends React.Component {
             {/* Step 2 */}
             { currentDotLink === 'step2' && 
               <>
-                <div className="form-group">
+                <div className="form-group mb-1">
                   <label className="mb-0">Who Paid?</label>
                   <InputDropdownSelect
                     optionList={tab.persons.filter((person) => !whoPaid.includes(person))}
@@ -193,7 +193,11 @@ class ModalTransactionAdd extends React.Component {
                 </div>
                 <div className="persons-paid">
                   { whoPaid.map((person) => (
-                    <p key={person}>{person}</p>
+                    <div className="person-chip mr-2 my-2" key={person}>
+
+                      <span>{person}</span>
+                      <i class="fas fa-times ml-3"></i>
+                    </div>
                   ))}
                 </div>
               </>
@@ -217,7 +221,7 @@ class ModalTransactionAdd extends React.Component {
                 </div>
                 <div className="persons-benefited">
                   { whoBenefited.map((person) => (
-                    <p key={person}>{person}</p>
+                    <span key={person}>{person}</span>
                   ))}
                 </div>
               </>
