@@ -5,25 +5,19 @@ import SideBarViewContainerBase from '../../components/SideBarViewContainerBase/
 import './TabsView.scss';
 import SideBarMain from '../../components/SideBarMain/SideBarMain';
 
-class TabsView extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  
-  render() {
-    return (
-      <SideBarViewContainerBase sidebar={<SideBarMain/>}>
-        <div className="container-tabs-view d-flex">
-          <div className="flex-grow-1">
-            <TabList/>
-          </div>
-          <div className="tab-info my-3 d-none d-xl-block">
-            <TabDetails/>
-          </div>
+function TabsView(props) {
+  return (
+    <SideBarViewContainerBase sidebar={<SideBarMain/>}>
+      <div className="container-tabs-view d-flex">
+        <div className="flex-grow-1">
+          <TabList/>
         </div>
-      </SideBarViewContainerBase>
-    )
-  }
+        <div className="tab-info my-3 d-none d-xl-block">
+          <TabDetails/>
+        </div>
+      </div>
+    </SideBarViewContainerBase>
+  )
 }
 
 export default TabsView;

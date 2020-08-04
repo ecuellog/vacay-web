@@ -65,7 +65,7 @@ export function fetchCreatedTabs() {
     return TabsService.getCreated()
       .then((res) => {
         dispatch(setTabList(res.data.ledgers));
-        dispatch(setSelectedTab(res.data.ledgers[0]));
+        if (res.data.ledgers.length) dispatch(setSelectedTab(res.data.ledgers[0]));
       })
       .catch((error) => {
         dispatch(setRequestError(error));

@@ -4,29 +4,22 @@ import { connect } from 'react-redux';
 import TransactionItem from '../TransactionItem/TransactionItem';
 import './TransactionList.scss';
 
-class TransactionList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  
-  render() {
-    return (
-      <div className="TransactionList pt-2">
-        <h2 className="mb-3 mx-3">Transactions</h2>
-        <div className="list px-3">
-          { this.props.transactions.map((transaction) => 
-            <TransactionItem transaction={transaction} key={transaction._id}/>
-          )}
-        </div>
-        <button
-          className="btn btn-primary btn-float-action"
-        >
-          <i className="fas fa-plus"></i>
-        </button>
+function TransactionList(props) {
+  return (
+    <div className="TransactionList pt-2">
+      <h2 className="mb-3 mx-3">Transactions</h2>
+      <div className="list px-3">
+        { props.transactions.map((transaction) => 
+          <TransactionItem transaction={transaction} key={transaction._id}/>
+        )}
       </div>
-    )
-  }
+      <button
+        className="btn btn-primary btn-float-action"
+      >
+        <i className="fas fa-plus"></i>
+      </button>
+    </div>
+  )
 }
 
 function mapDispatchToProps(dispatch) {

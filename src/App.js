@@ -31,48 +31,42 @@ toast.configure({
   closeButton: false
 });
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+function App(props) {
+  props.setTokenAuthenticatedUser();
 
-    this.props.setTokenAuthenticatedUser();
-  }
+  return (
+    <div>
+    { props.initialAuthDone && 
+      <Router>
+        <div>
+          <Switch>
+            <Redirect exact from="/" to="/login" />
+            <ViewWrapperUnauthenticated path="/login">
+              <LoginView />
+            </ViewWrapperUnauthenticated>
+            <ViewWrapperAuthenticated exact path="/tabs">
+              <TabsView />
+            </ViewWrapperAuthenticated>
+            <ViewWrapperAuthenticated path="/sharedtabs">
+              <SharedTabsView />
+            </ViewWrapperAuthenticated>
+            <ViewWrapperAuthenticated path="/friends">
+              <FriendsView />
+            </ViewWrapperAuthenticated>
+            <ViewWrapperAuthenticated path="/settings">
+              <SettingsView />
+            </ViewWrapperAuthenticated>
 
-  render() {
-    return (
-      <div>
-      { this.props.initialAuthDone && 
-        <Router>
-          <div>
-            <Switch>
-              <Redirect exact from="/" to="/login" />
-              <ViewWrapperUnauthenticated path="/login">
-                <LoginView />
-              </ViewWrapperUnauthenticated>
-              <ViewWrapperAuthenticated exact path="/tabs">
-                <TabsView />
-              </ViewWrapperAuthenticated>
-              <ViewWrapperAuthenticated path="/sharedtabs">
-                <SharedTabsView />
-              </ViewWrapperAuthenticated>
-              <ViewWrapperAuthenticated path="/friends">
-                <FriendsView />
-              </ViewWrapperAuthenticated>
-              <ViewWrapperAuthenticated path="/settings">
-                <SettingsView />
-              </ViewWrapperAuthenticated>
-
-              {/* Tab routes */}
-              <ViewWrapperAuthenticated path="/tabs/:tabId">
-                <TabDetailView />
-              </ViewWrapperAuthenticated>
-            </Switch>
-          </div>
-        </Router>
-      }
-      </div>
-    );
-  }
+            {/* Tab routes */}
+            <ViewWrapperAuthenticated path="/tabs/:tabId">
+              <TabDetailView />
+            </ViewWrapperAuthenticated>
+          </Switch>
+        </div>
+      </Router>
+    }
+    </div>
+  );
 }
 
 function mapDispatchToProps(dispatch){

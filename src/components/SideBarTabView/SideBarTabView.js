@@ -13,7 +13,6 @@ function SideBarTabView(props) {
     setTabId(_.get(props, 'tab._id'));
   });
 
-
   return (
     <>
       <NavLink className="link pl-3 mb-2" activeClassName="active" to="/tabs" exact>
