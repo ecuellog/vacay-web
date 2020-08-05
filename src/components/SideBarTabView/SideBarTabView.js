@@ -11,7 +11,7 @@ function SideBarTabView(props) {
 
   useEffect(() => {
     setTabId(_.get(props, 'tab._id'));
-  });
+  }, [props.tab]);
 
   return (
     <>

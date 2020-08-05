@@ -11,7 +11,7 @@ function TabDetails(props) {
 
   useEffect(() => {
     if(props.tab) props.fetchTransactions(props.tab._id);
-  }, [props.tab]);
+  }, [props.tab, props.fetchTransactions]);
 
   function handleTransactionAddModalClose() {
     setShowTransactionAddModal(false);
