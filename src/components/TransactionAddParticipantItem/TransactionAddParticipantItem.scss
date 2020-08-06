@@ -1,0 +1,19 @@
+@import '../../styles/bootstrap-override.scss';
+
+.Component_TransactionAddParticipantItem {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  background-color: $bg-level-3;
+  box-shadow: 0px 0px 10px 0px #00000038;
+  border-radius: 1px;
+  border-left: solid 2px $app-pink;
+  color: white;
+
+  .delete-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 8px 12px;
+  }
+}
