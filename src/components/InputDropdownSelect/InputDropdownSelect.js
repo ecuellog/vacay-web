@@ -51,11 +51,31 @@ function InputDropdownSelect(props) {
                 { props.actionOptionString }
               </li>
             }
-            { props.optionList.map(option => (
-              <li className="clickable" key={option} onClick={() => handleOptionSelect(option)}>
-                {option}
-              </li>
-            ))}
+            { props.optionListToString ? 
+              <>
+                { props.optionList.map(option => (
+                    <li
+                      className="clickable"
+                      key={option[props.optionKey]}
+                      onClick={() => handleOptionSelect(option)}
+                    >
+                      {props.optionListToString(option)}
+                    </li>
+                ))}
+              </>
+              :
+              <>
+                { props.optionList.map(option => (
+                  <li
+                    className="clickable"
+                    key={option}
+                    onClick={() => handleOptionSelect(option)}
+                  >
+                    {option}
+                  </li>
+                ))}
+              </>
+            }
             { !props.optionList.length && 
               <li className="non-clickable">
                 {props.emptyListMessage}

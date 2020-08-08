@@ -14,15 +14,39 @@ function TransactionAddParticipantItem(props) {
     }
   }, [props.friends]);
 
+  function friendIsSelf() {
+    return friend.userId === props.currentUser._id
+  }
+
   return (
     <div className="Component_TransactionAddParticipantItem p-3 my-3">
       {
         friend ? 
           <>
-            <p>{friend.name}</p>
-            <p>{friend.email}</p>
-            <p>{props.participant.invite}</p>
-            <button onClick={props.onDelete}>delete</button>
+            <div className="flex-grow-1">
+              { friendIsSelf() ?
+                <p className="friend-name">{friend.name} (You)</p>
+                :
+                <p className="friend-name">{friend.name}</p>
+              }
+              <p className="friend-email">{friend.email}</p>
+            </div>
+            { !friendIsSelf() &&
+              <div className="share-toggle-container d-flex flex-column justify-content-center">
+                <label className="text-center">Share</label>
+                <Switch
+                  checked={props.participant.invite}
+                  onChange={e => props.changeParticipantInvite(e.target.checked)}
+                />
+              </div>
+            }
+            <button
+              className="btn btn-blank delete-button"
+              onClick={props.onDelete}
+              type="button"
+            >
+              <i className="fas fa-times"></i>
+            </button>
           </>
         :
           <>

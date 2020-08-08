@@ -35,6 +35,18 @@ function ModalTabAdd(props) {
     return participantsByFriendId.includes(friendId);
   }
 
+  function generateFriendString(friend) {
+    if (friend.userId === props.currentUser._id) {
+      return `${friend.name} (You)`;
+    }
+
+    if (friend.email) {
+      return `${friend.name} (${friend.email})`;
+    }
+
+    return `${friend.name} (no email)`;
+  }
+
   function addNewParticipant() {
     setParticipants([
       ...participants,
@@ -58,7 +70,6 @@ function ModalTabAdd(props) {
   }
 
   function changeParticipantProp(index, prop, propName) {
-    console.log(prop);
     let newParticipants = _.cloneDeep(participants);
     newParticipants[index][propName] = prop;
     setParticipants(newParticipants);
@@ -99,6 +110,8 @@ function ModalTabAdd(props) {
             <label className="mb-0">Add participant</label>
             <InputDropdownSelect
               optionList={props.friends.filter(friend => !isFriendInParticipants(friend._id))}
+              optionListToString={(op) => generateFriendString(op)}
+              optionKey="_id"
               value={friendInput}
               onValueChange={value => setFriendInput(value)}
               actionOption={true}

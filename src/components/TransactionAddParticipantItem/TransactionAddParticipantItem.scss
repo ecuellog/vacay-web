@@ -36,4 +36,16 @@
   .MuiSwitch-colorSecondary.Mui-checked {
     color: $primary;
   }
+  
+  .friend-name {
+    letter-spacing: .4px;
+    font-weight: bolder;
+    margin-bottom: 0;
+  }
+
+  .friend-email {
+    margin-bottom: 0;
+    font-size: 14px;
+    color: #dadada;
+  }
 }
