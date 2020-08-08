@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
+import Switch from '@material-ui/core/Switch';
 import './TransactionAddParticipantItem.scss';
 
 function TransactionAddParticipantItem(props) {
@@ -20,12 +21,12 @@ function TransactionAddParticipantItem(props) {
           <>
             <p>{friend.name}</p>
             <p>{friend.email}</p>
-            <p>{props.participant.invited}</p>
+            <p>{props.participant.invite}</p>
             <button onClick={props.onDelete}>delete</button>
           </>
         :
           <>
-            <div>
+            <div className="flex-grow-1">
               <input
                 type="text"
                 value={props.participant.name}
@@ -41,7 +42,13 @@ function TransactionAddParticipantItem(props) {
                 className="form-control w-100 mt-2"
               ></input>
             </div>
-            <p>{props.participant.invited}</p>
+            <div className="share-toggle-container d-flex flex-column justify-content-center">
+              <label className="text-center">Share</label>
+              <Switch
+                checked={props.participant.invite}
+                onChange={e => props.changeParticipantInvite(e.target.checked)}
+              />
+            </div>
             <button
               className="btn btn-blank delete-button"
               onClick={props.onDelete}

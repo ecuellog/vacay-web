@@ -58,6 +58,7 @@ function ModalTabAdd(props) {
   }
 
   function changeParticipantProp(index, prop, propName) {
+    console.log(prop);
     let newParticipants = _.cloneDeep(participants);
     newParticipants[index][propName] = prop;
     setParticipants(newParticipants);
@@ -95,7 +96,7 @@ function ModalTabAdd(props) {
           <div className="form-group">
             <label className="mb-0">Tab name</label>
             <input className="form-control mb-3" name="tabName" placeholder="Mars 2055" value={tabName} onChange={(e) => setTabName(e.target.value)}></input>
-
+            <label className="mb-0">Add participant</label>
             <InputDropdownSelect
               optionList={props.friends.filter(friend => !isFriendInParticipants(friend._id))}
               value={friendInput}
@@ -113,6 +114,7 @@ function ModalTabAdd(props) {
                 participant={participant}
                 changeParticipantName={name => changeParticipantProp(index, name, "name")}
                 changeParticipantEmail={email => changeParticipantProp(index, email, "email")}
+                changeParticipantInvite={invite => changeParticipantProp(index, invite, "invite")}
                 onDelete={() => deleteParticipant(index)}
               />
             ))}
