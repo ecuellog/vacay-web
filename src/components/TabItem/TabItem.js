@@ -26,7 +26,7 @@ function TabItem(props) {
     >
       <div>
         <h5 className="tab-name">{props.tab.name}</h5>
-        <p className="tab-persons mb-0"> {props.tab.persons.length} persons in this tab </p>
+        <p className="tab-persons mb-0"> {props.tab.participants.length} participants </p>
       </div>
       <div className="d-flex">
         <span className="tab-modified-at pr-3">Last modified: <b>{moment(props.tab.updatedAt).fromNow()}</b></span>

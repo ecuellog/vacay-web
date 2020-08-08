@@ -15,7 +15,7 @@ function ModalTransactionAdd(props) {
   const [amount, setAmount] = useState(0.00);
   const [whoPaid, setWhoPaid] = useState([]);
   const [whoPaidInput, setWhoPaidInput] = useState('');
-  const [whoBenefited, setWhoBenefited] = useState([...props.tab.persons]);
+  const [whoBenefited, setWhoBenefited] = useState([...props.tab.participants]);
   const [whoBenefitedInput, setWhoBenefitedInput] = useState('');
   const [currentDotLink, setCurrentDotLink] = useState('step1');
 

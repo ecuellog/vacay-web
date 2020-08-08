@@ -19,12 +19,14 @@ function TabList(props) {
           <TabItem tab={tab} key={tab._id}/>
         )}
       </div>
-      <button
-        className="btn btn-primary btn-float-action"
-        onClick={() => setShowCreateModal(true)}
-      >
-        <i className="fas fa-plus"></i>
-      </button>
+      <div className="container-btn-float-action">
+        <button
+          className="btn btn-primary btn-float-action"
+          onClick={() => setShowCreateModal(true)}
+        >
+          <i className="fas fa-plus"></i>
+        </button>
+      </div>
       <ModalTabAdd
         showModal={showCreateModal}
         handleModalHide={() => setShowCreateModal(false)}
