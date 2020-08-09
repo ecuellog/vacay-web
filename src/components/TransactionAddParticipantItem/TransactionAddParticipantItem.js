@@ -33,8 +33,9 @@ function TransactionAddParticipantItem(props) {
             </div>
             { !friendIsSelf() &&
               <div className="share-toggle-container d-flex flex-column justify-content-center">
-                <label className="text-center">Share</label>
+                <label className="text-center mb-0">Share</label>
                 <Switch
+                  size="small"
                   checked={props.participant.invite}
                   onChange={e => props.changeParticipantInvite(e.target.checked)}
                 />
@@ -67,8 +68,9 @@ function TransactionAddParticipantItem(props) {
               ></input>
             </div>
             <div className="share-toggle-container d-flex flex-column justify-content-center">
-              <label className="text-center">Share</label>
+              <label className="text-center mb-0">Share</label>
               <Switch
+                size="small"
                 checked={props.participant.invite}
                 onChange={e => props.changeParticipantInvite(e.target.checked)}
               />

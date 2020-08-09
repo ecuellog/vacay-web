@@ -87,12 +87,14 @@ function ModalTabAdd(props) {
       name: tabName,
       participants: participants
     }
-    props.createTab(tab);
-    handleModalHide();
-    toast('Tab successfully created!');
-
-    // TODO - Return list of friends created on backend and update the state accordingly
-    props.fetchFriends();
+    props.createTab(tab)
+      .then(() => {
+        toast('Tab successfully created!');
+        handleModalHide();
+      })
+      .catch((err) => {
+        toast.error('There was an error creating the tab. Please try again.');
+      });
   }
 
   function handleModalHide() {

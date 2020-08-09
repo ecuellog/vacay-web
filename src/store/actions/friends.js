@@ -3,7 +3,7 @@ import FriendsService from '../../services/friends';
 export const SET_FRIENDS = 'SET_FRIENDS';
 
 // Basic
-function setFriends(friends) {
+export function setFriends(friends) {
   return {
     type: SET_FRIENDS,
     friends

@@ -1,4 +1,5 @@
 import TabsService from '../../services/tabs';
+import { setFriends } from './friends';
 
 export const SET_TAB_LIST = 'SET_TAB_LIST';
 export const ADD_TAB = 'ADD_TAB';
@@ -76,15 +77,23 @@ export function fetchCreatedTabs() {
 }
 
 export function createTab(tab) {
-  return function(dispatch) {
-    dispatch(setRequestProcessing(true));
-    return TabsService.create(tab)
-      .then((res) => dispatch(addTab(res.data.ledger)))
-      .catch((error) => {
-        dispatch(setRequestError(error));
-        console.error(error);
-      })
-      .then(() => dispatch(setRequestProcessing(false)))
+  return function(dispatch, getState) {
+    return new Promise((resolve, reject) => {
+      dispatch(setRequestProcessing(true));
+      TabsService.create(tab)
+        .then((res) => {
+          dispatch(addTab(res.data.ledger));
+          let friends = getState().friends.friends;
+          let newFriendList = [...friends, ...res.data.newFriends];
+          dispatch(setFriends(newFriendList));
+          resolve();
+        })
+        .catch((error) => {
+          dispatch(setRequestError(error));
+          reject(error);
+        })
+        .then(() => dispatch(setRequestProcessing(false)))
+    });
   }
 }
 
