@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { fetchFriends } from '../../store/actions/friends';
 import { createTab } from '../../store/actions/tabs';
 import { toast } from 'react-toastify';
 import { Modal } from 'react-bootstrap';
@@ -12,10 +11,6 @@ function ModalTabAdd(props) {
   const [participants, setParticipants] = useState([]);
   const [friendInput, setFriendInput] = useState('');
   const [tabName, setTabName] = useState('');
-
-  useEffect(() => {
-    props.fetchFriends();
-  }, []);
 
   useEffect(() => {
     const selfFriend = props.friends.find(friend => friend.userId === props.currentUser._id);
@@ -115,7 +110,7 @@ function ModalTabAdd(props) {
             <label className="mb-0">Add participant</label>
             <InputDropdownSelect
               optionList={props.friends.filter(friend => !isFriendInParticipants(friend._id))}
-              optionListToString={(op) => generateFriendString(op)}
+              optionListToString={(friend) => generateFriendString(friend)}
               optionKey="_id"
               value={friendInput}
               onValueChange={value => setFriendInput(value)}
@@ -163,7 +158,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchFriends: () => dispatch(fetchFriends()),
     createTab: (tab) => dispatch(createTab(tab))
   }
 }

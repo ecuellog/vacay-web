@@ -16,6 +16,7 @@ import TabDetailView from './views/TabDetailView/TabDetailView';
 import './App.css';
 import ViewWrapperAuthenticated from './components/ViewWrapperAuthenticated';
 import ViewWrapperUnauthenticated from './components/ViewWrapperUnauthenticated';
+import { fetchFriends } from './store/actions/friends';
 
 toast.configure({
   position: "top-center",
@@ -33,6 +34,7 @@ toast.configure({
 
 function App(props) {
   props.setTokenAuthenticatedUser();
+  props.fetchFriends();
 
   return (
     <div>
@@ -71,7 +73,8 @@ function App(props) {
 
 function mapDispatchToProps(dispatch){
   return {
-    setTokenAuthenticatedUser: () => dispatch(setTokenAuthenticatedUser())
+    setTokenAuthenticatedUser: () => dispatch(setTokenAuthenticatedUser()),
+    fetchFriends: () => dispatch(fetchFriends())
   }
 }
 

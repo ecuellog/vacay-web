@@ -31,8 +31,8 @@ function ModalTransactionAdd(props) {
       amountDollars: dollars,
       amountCents: cents,
       ledger: props.tab._id,
-      whoPaid: whoPaid,
-      whoBenefited: whoBenefited
+      whoPaid: whoPaid.map(participant => participant.friend),
+      whoBenefited: whoBenefited.map(participant => participant.friend)
     }
 
     props.createTransaction(transaction);
@@ -105,6 +105,10 @@ function ModalTransactionAdd(props) {
     , 200);
   }
 
+  function getFriendById(friendId) {
+    return props.friends.find(friend => friend._id === friendId);
+  }
+
   return (
     <Modal show={props.showModal} onHide={props.handleModalClose}>
       <Modal.Body>
@@ -167,20 +171,22 @@ function ModalTransactionAdd(props) {
               <div className="form-group mb-1">
                 <label className="mb-0">Who Paid?</label>
                 <InputDropdownSelect
-                  optionList={props.tab.persons.filter((person) => !whoPaid.includes(person))}
+                  optionList={props.tab.participants.filter((p) => !whoPaid.includes(p))}
+                  optionListToString={p => getFriendById(p.friend).name}
+                  optionKey="friend"
                   value={whoPaidInput}
                   onValueChange={(value) => setWhoPaidInput(value)}
                   actionOption={true}
                   actionOptionString={`Add new person "${whoPaidInput}"`}
                   onActionOptionSelect={addNewWhoPaid}
-                  onSelect={(person) => addWhoPaid(person)}
+                  onSelect={(participant) => addWhoPaid(participant)}
                   emptyListMessage={'-- No more persons in tab --'}
                 />
               </div>
               <div className="persons-paid">
-                { whoPaid.map((person, i) => (
-                  <div className="person-chip mr-2 my-2" key={person}>
-                    <span>{person}</span>
+                { whoPaid.map((participant, i) => (
+                  <div className="person-chip mr-2 my-2" key={participant.friend}>
+                    <span>{getFriendById(participant.friend).name}</span>
                     <i className="fas fa-times ml-3" onClick={() => deletePaid(i)}></i>
                   </div>
                 ))}
@@ -194,20 +200,22 @@ function ModalTransactionAdd(props) {
               <div className="form-group mb-1">
                 <label className="mb-0">Who Benefited?</label>
                 <InputDropdownSelect
-                  optionList={props.tab.persons.filter((person) => !whoBenefited.includes(person))}
+                  optionList={props.tab.participants.filter((p) => !whoBenefited.includes(p))}
+                  optionListToString={p => getFriendById(p.friend).name}
+                  optionKey="friend"
                   value={whoBenefitedInput}
                   onValueChange={(value) => setWhoBenefitedInput(value)}
                   actionOption={true}
                   actionOptionString={`Add new person "${whoBenefitedInput}"`}
                   onActionOptionSelect={addNewWhoBenefited}
-                  onSelect={(person) => addWhoBenefited(person)}
+                  onSelect={(participant) => addWhoBenefited(participant)}
                   emptyListMessage={'-- No more persons in tab --'}
                 />
               </div>
               <div className="persons-benefited">
-                { whoBenefited.map((person, i) => (
-                  <div className="person-chip mr-2 my-2" key={person}>
-                    <span>{person}</span>
+                { whoBenefited.map((participant, i) => (
+                  <div className="person-chip mr-2 my-2" key={participant.friend}>
+                    <span>{getFriendById(participant.friend).name}</span>
                     <i className="fas fa-times ml-3" onClick={() => deleteBenefited(i)}></i>
                   </div>
                 ))}
@@ -284,10 +292,17 @@ function ModalTransactionAdd(props) {
   );
 }
 
+function mapStateToProps(state) {
+  return {
+    currentUser: state.auth.user,
+    friends: state.friends.friends
+  }
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     createTransaction: (tabId, transaction) => dispatch(createTransaction(tabId, transaction))
   }
 }
 
-export default connect(null, mapDispatchToProps)(ModalTransactionAdd);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalTransactionAdd);

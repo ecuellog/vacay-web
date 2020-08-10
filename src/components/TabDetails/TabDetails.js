@@ -13,6 +13,10 @@ function TabDetails(props) {
     if(props.tab) props.fetchTransactions(props.tab._id);
   }, [props.tab, props.fetchTransactions]);
 
+  function getFriendById(friendId) {
+    return props.friends.find(friend => friendId === friend._id);
+  }
+
   function handleTransactionAddModalClose() {
     setShowTransactionAddModal(false);
   }
@@ -35,10 +39,10 @@ function TabDetails(props) {
             <h4>Balances</h4>
             <button className="btn btn-outline-primary btn-sm">Add Person</button>
           </div>
-          { props.balance && props.tab.persons.map(person => (
-              <div className="d-flex justify-content-between mb-2" key={person}>
-                <p>{ person }</p>
-                <p>${ _.get(props.balance.balances.get(person), 'total') }</p>
+          { props.balance && props.tab.participants.map(participant => (
+              <div className="d-flex justify-content-between mb-2" key={participant.friend}>
+                <p>{ getFriendById(participant.friend).name }</p>
+                <p>${ _.get(props.balance.balances.get(participant.friend), 'total') }</p>
               </div>
           ))}
 
@@ -85,7 +89,8 @@ function mapStateToProps(state) {
   return {
     transactions: state.transactions.transactions,
     tab: state.tabs.selectedTab,
-    balance: state.tabs.tabBalance
+    balance: state.tabs.tabBalance,
+    friends: state.friends.friends
   }
 }
 

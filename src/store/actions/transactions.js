@@ -52,7 +52,7 @@ export function fetchTransactions(tabId) {
       .then((res) => {
         const balances = Calculator.balances(
           res.data.transactions,
-          getState().tabs.selectedTab.persons
+          getState().tabs.selectedTab.participants
         )
         dispatch(setTabBalance(balances));
         dispatch(setTransactionList(res.data.transactions));
@@ -75,7 +75,7 @@ export function createTransaction(transaction) {
         if(selectedTab._id === transaction.ledger) {
           const balances = Calculator.balances(
             [...getState().transactions.transactions, res.data.transaction],
-            selectedTab.persons
+            selectedTab.participants
           );
           dispatch(addTransaction(res.data.transaction));
           dispatch(setTabBalance(balances));

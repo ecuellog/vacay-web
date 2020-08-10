@@ -63,7 +63,7 @@ function TransactionAddParticipantItem(props) {
                 type="text"
                 value={props.participant.email}
                 onChange={e => props.changeParticipantEmail(e.target.value)}
-                placeholder="Email"
+                placeholder="Email (optional)"
                 className="form-control w-100 mt-2"
               ></input>
             </div>
