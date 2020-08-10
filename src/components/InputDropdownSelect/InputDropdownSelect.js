@@ -34,6 +34,25 @@ function InputDropdownSelect(props) {
     props.onValueChange('');
   }
 
+  function getVisibleOptions() {
+    if(props.optionListToString) {
+      let visibleOptions = props.optionList
+        .filter(option =>
+          props.optionListToString(option)
+            .toLowerCase()
+            .includes(props.value.toLowerCase())
+        );
+      return visibleOptions;
+    } else {
+      let visibleOptions = props.optionList
+        .filter(option =>
+          option.toLowerCase()
+          .includes(props.value.toLowerCase())
+        );
+      return visibleOptions;
+    }
+  }
+
   return (
     <div className="input-dropdown-select-component" ref={componentRef}>
       <div className="form-control dropdown-input" ref={inputRef} tabIndex="0">
@@ -53,7 +72,7 @@ function InputDropdownSelect(props) {
             }
             { props.optionListToString ? 
               <>
-                { props.optionList.map(option => (
+                { getVisibleOptions().map(option => (
                     <li
                       className="clickable"
                       key={option[props.optionKey]}
@@ -65,7 +84,7 @@ function InputDropdownSelect(props) {
               </>
               :
               <>
-                { props.optionList.map(option => (
+                { getVisibleOptions().map(option => (
                   <li
                     className="clickable"
                     key={option}
