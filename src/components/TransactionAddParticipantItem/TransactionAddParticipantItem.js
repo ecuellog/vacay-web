@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as _ from 'lodash';
 import Switch from '@material-ui/core/Switch';
 import './TransactionAddParticipantItem.scss';
+import { Avatar } from '@material-ui/core';
 
 function TransactionAddParticipantItem(props) {
   const [friend, setFriend] = useState(null);
@@ -19,17 +20,23 @@ function TransactionAddParticipantItem(props) {
   }
 
   return (
-    <div className="Component_TransactionAddParticipantItem p-3 my-3">
+    <div className="Component_TransactionAddParticipantItem p-3 my-3 align-items-center">
       {
         friend ? 
           <>
+            <Avatar
+              alt={friend.name}
+              src={friend.avatarSrc || 'noimage'}
+              className="mr-3"
+              style={{ backgroundColor: friend.avatarColor }}
+            ></Avatar>
             <div className="flex-grow-1">
               { friendIsSelf() ?
                 <p className="friend-name">{friend.name} (You)</p>
                 :
                 <p className="friend-name">{friend.name}</p>
               }
-              <p className="friend-email">{friend.email}</p>
+              <p className="friend-email">{friend.email || '(no email)'}</p>
             </div>
             { !friendIsSelf() &&
               <div className="share-toggle-container d-flex flex-column justify-content-center">
