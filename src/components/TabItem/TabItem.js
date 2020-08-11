@@ -7,22 +7,13 @@ import { withRouter } from 'react-router-dom';
 import * as _ from 'lodash';
 
 function TabItem(props) {
-  function handleTabItemClick(tabId) {
-    if(tabId === _.get(props.selectedTab, '_id')) {
-      props.history.push(`/tabs/${tabId}`);
-    } else {
-      console.log(tabId);
-      props.setSelectedTabFromList(tabId);
-    }
-  }
-
   return (
     <div
       className={`
         component-tab-item p-3 mb-3
         ${props.tab._id === _.get(props.selectedTab, "_id") ? "active": ""}
       `}
-      onClick={() => handleTabItemClick(props.tab._id)}
+      onClick={() => props.setSelectedTabFromList(props.tab._id)}
     >
       <div>
         <h5 className="tab-name">{props.tab.name}</h5>

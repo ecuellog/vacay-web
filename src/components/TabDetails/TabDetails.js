@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './TabDetails.scss';
 import { fetchTransactions } from '../../store/actions/transactions';
+import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
 import ModalTransactionAdd from '../ModalTransactionAdd/ModalTransactionAdd';
 
 function TabDetails(props) {
+  const history = useHistory();
   const [showTransactionAddModal, setShowTransactionAddModal] = useState(false);
 
   useEffect(() => {
@@ -23,6 +25,10 @@ function TabDetails(props) {
 
   function handleTransactionAddModalOpen() {
     setShowTransactionAddModal(true);
+  }
+
+  function handleViewDetailsClick() {
+    history.push(`/tabs/${props.tab._id}`);
   }
 
   return (
@@ -57,7 +63,10 @@ function TabDetails(props) {
           {/* Action Buttons */}
           <div className="row no-gutters mt-4">
             <div className="col-6 text-center pr-2">
-              <button className="btn btn-block btn-primary">View Details</button>
+              <button
+                className="btn btn-block btn-primary"
+                onClick={handleViewDetailsClick}
+              >View Details</button>
             </div>
             <div className="col-6 text-center pl-2">
               <button
