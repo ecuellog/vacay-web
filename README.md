@@ -6,7 +6,7 @@ A web application for tracking shared expenses.
 **Install dependencies**  
 `npm install`
 
-**Run the API server**  
+**Run the app**  
 `npm start`
 
 
