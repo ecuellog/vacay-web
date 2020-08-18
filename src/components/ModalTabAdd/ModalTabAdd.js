@@ -4,13 +4,14 @@ import { createTab } from '../../store/actions/tabs';
 import { toast } from 'react-toastify';
 import { Modal } from 'react-bootstrap';
 import * as _ from 'lodash';
+import { useForm } from "react-hook-form";
 import TransactionAddParticipantItem from '../TransactionAddParticipantItem/TransactionAddParticipantItem';
 import InputDropdownSelect from '../InputDropdownSelect/InputDropdownSelect';
 
 function ModalTabAdd(props) {
   const [participants, setParticipants] = useState([]);
   const [friendInput, setFriendInput] = useState('');
-  const [tabName, setTabName] = useState('');
+  const { register, handleSubmit, errors, setValue } = useForm();
 
   useEffect(() => {
     const selfFriend = props.friends.find(friend => friend.userId === props.currentUser._id);
@@ -76,10 +77,9 @@ function ModalTabAdd(props) {
     setParticipants(newParticipants);
   }
 
-  function handleCreateTab(e) {
-    e.preventDefault();
+  function handleCreateTab(data) {
     let tab = {
-      name: tabName,
+      name: data.tabName,
       participants: participants
     }
     props.createTab(tab)
@@ -95,7 +95,7 @@ function ModalTabAdd(props) {
   function handleModalHide() {
     setParticipants([]);
     setFriendInput('');
-    setTabName('');
+    setValue('tabName', '');
     props.handleModalHide();
   }
 
@@ -103,10 +103,18 @@ function ModalTabAdd(props) {
     <Modal show={props.showModal} onHide={handleModalHide}>
       <Modal.Body>
         <h4 className="mb-4">Create Tab</h4>
-        <form>
+        <form onSubmit={handleSubmit(handleCreateTab)}>
           <div className="form-group">
             <label className="mb-0">Tab name</label>
-            <input className="form-control mb-3" name="tabName" placeholder="Mars 2055" value={tabName} onChange={(e) => setTabName(e.target.value)}></input>
+            <input
+              name="tabName"
+              className="form-control mb-3"
+              placeholder="Mars 2055"
+              ref={register({required: true})}
+            ></input>
+            { errors.tabName && 
+              <p className="form-error">Tab name is required</p>
+            }
             <label className="mb-0">Add participant</label>
             <InputDropdownSelect
               optionList={props.friends.filter(friend => !isFriendInParticipants(friend._id))}
@@ -133,9 +141,8 @@ function ModalTabAdd(props) {
             ))}
 
             <button
-              type="button"
+              type="submit"
               className="btn btn-primary float-right mt-5"
-              onClick={handleCreateTab}
             >Save</button>
             <button
               type="button"
