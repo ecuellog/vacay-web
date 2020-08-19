@@ -5,7 +5,7 @@ import { setTokenAuthenticatedUser } from './store/actions/auth';
 import { toast } from 'react-toastify';
 import LoginView from './views/LoginView/LoginView';
 import TabsView from './views/TabsView/TabsView';
-import SharedTabsView from './views/SharedTabsView';
+import SharedTabsView from './views/SharedTabsView/SharedTabsView';
 import FriendsView from './views/FriendsView';
 import SettingsView from './views/SettingsView';
 import TabDetailView from './views/TabDetailView/TabDetailView';
