@@ -1,9 +1,5 @@
-import React from 'react';
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Switch
-} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setTokenAuthenticatedUser } from './store/actions/auth';
 import { toast } from 'react-toastify';
@@ -19,7 +15,7 @@ import ViewWrapperUnauthenticated from './components/ViewWrapperUnauthenticated'
 import { fetchFriends } from './store/actions/friends';
 
 toast.configure({
-  position: "top-center",
+  position: 'top-center',
   autoClose: 5000,
   hideProgressBar: true,
   newestOnTop: true,
@@ -34,54 +30,64 @@ toast.configure({
 
 function App(props) {
   props.setTokenAuthenticatedUser();
-  props.fetchFriends();
+
+  useEffect(() => {
+    if (props.isAuthenticated && props.initialAuthDone) {
+      props.fetchFriends();
+    }
+  }, [props.isAuthenticated, props.initialAuthDone]);
 
   return (
     <div>
-    { props.initialAuthDone && 
-      <Router>
-        <div>
-          <Switch>
-            <Redirect exact from="/" to="/login" />
-            <ViewWrapperUnauthenticated path="/login">
-              <LoginView />
-            </ViewWrapperUnauthenticated>
-            <ViewWrapperAuthenticated exact path="/tabs">
-              <TabsView />
-            </ViewWrapperAuthenticated>
-            <ViewWrapperAuthenticated path="/sharedtabs">
-              <SharedTabsView />
-            </ViewWrapperAuthenticated>
-            <ViewWrapperAuthenticated path="/friends">
-              <FriendsView />
-            </ViewWrapperAuthenticated>
-            <ViewWrapperAuthenticated path="/settings">
-              <SettingsView />
-            </ViewWrapperAuthenticated>
+      {props.initialAuthDone && (
+        <Router>
+          <div>
+            <Switch>
+              <Redirect exact from="/" to="/login" />
 
-            {/* Tab routes */}
-            <ViewWrapperAuthenticated path="/tabs/:tabId">
-              <TabDetailView />
-            </ViewWrapperAuthenticated>
-          </Switch>
-        </div>
-      </Router>
-    }
+              {/* Unauthenticated routes */}
+              <ViewWrapperUnauthenticated path="/login">
+                <LoginView />
+              </ViewWrapperUnauthenticated>
+
+              {/* Authenticated routes*/}
+              <ViewWrapperAuthenticated exact path="/tabs">
+                <TabsView />
+              </ViewWrapperAuthenticated>
+              <ViewWrapperAuthenticated path="/sharedtabs">
+                <SharedTabsView />
+              </ViewWrapperAuthenticated>
+              <ViewWrapperAuthenticated path="/friends">
+                <FriendsView />
+              </ViewWrapperAuthenticated>
+              <ViewWrapperAuthenticated path="/settings">
+                <SettingsView />
+              </ViewWrapperAuthenticated>
+
+              {/* Tab routes */}
+              <ViewWrapperAuthenticated path="/tabs/:tabId">
+                <TabDetailView />
+              </ViewWrapperAuthenticated>
+            </Switch>
+          </div>
+        </Router>
+      )}
     </div>
   );
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
   return {
     setTokenAuthenticatedUser: () => dispatch(setTokenAuthenticatedUser()),
     fetchFriends: () => dispatch(fetchFriends())
-  }
+  };
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
-    initialAuthDone: state.auth.initialAuthDone
-  }
+    initialAuthDone: state.auth.initialAuthDone,
+    isAuthenticated: state.auth.isAuthenticated
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
