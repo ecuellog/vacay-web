@@ -1,11 +1,11 @@
-import AuthService from "../../services/auth";
-import Cookies from "js-cookie";
+import AuthService from '../../services/auth';
+import Cookies from 'js-cookie';
 
-export const SET_AUTHENTICATED_USER = "SET_AUTHENTICATED_USER";
-export const UNSET_AUTHENTICATED_USER = "UNSET_AUTHENTICATED_USER";
-export const SET_INITIAL_AUTH_DONE = "SET_INITIAL_AUTH_DONE";
-export const AUTH_SET_REQUEST_PROCESSING = "AUTH_SET_REQUEST_PROCESSING";
-export const AUTH_SET_REQUEST_ERROR = "AUTH_SET_REQUEST_ERROR";
+export const SET_AUTHENTICATED_USER = 'SET_AUTHENTICATED_USER';
+export const UNSET_AUTHENTICATED_USER = 'UNSET_AUTHENTICATED_USER';
+export const SET_INITIAL_AUTH_DONE = 'SET_INITIAL_AUTH_DONE';
+export const AUTH_SET_REQUEST_PROCESSING = 'AUTH_SET_REQUEST_PROCESSING';
+export const AUTH_SET_REQUEST_ERROR = 'AUTH_SET_REQUEST_ERROR';
 
 // Basic
 function setAuthenticatedUser(user) {
@@ -73,9 +73,10 @@ export function deauthenticateUser() {
     return AuthService.logout()
       .then(res => {
         dispatch(unsetAuthenticatedUser());
-        Cookies.remove("csrf-token");
-        Cookies.remove("access-token");
-        Cookies.remove("refresh-token");
+        Cookies.remove('csrf-token');
+        Cookies.remove('access-token');
+        Cookies.remove('refresh-token');
+        sessionStorage.removeItem('authRouteRedirect');
       })
       .catch(error => dispatch(setRequestError(error)))
       .then(() => dispatch(setRequestProcessing(false)));
