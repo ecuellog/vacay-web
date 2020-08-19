@@ -9,6 +9,7 @@ import SharedTabsView from './views/SharedTabsView';
 import FriendsView from './views/FriendsView';
 import SettingsView from './views/SettingsView';
 import TabDetailView from './views/TabDetailView/TabDetailView';
+import AcceptInviteView from './views/AcceptInviteView/AcceptInviteView';
 import './App.css';
 import ViewWrapperAuthenticated from './components/ViewWrapperAuthenticated';
 import ViewWrapperUnauthenticated from './components/ViewWrapperUnauthenticated';
@@ -62,6 +63,9 @@ function App(props) {
               </ViewWrapperAuthenticated>
               <ViewWrapperAuthenticated path="/settings">
                 <SettingsView />
+              </ViewWrapperAuthenticated>
+              <ViewWrapperAuthenticated path="/invite/:inviteId">
+                <AcceptInviteView />
               </ViewWrapperAuthenticated>
 
               {/* Tab routes */}
