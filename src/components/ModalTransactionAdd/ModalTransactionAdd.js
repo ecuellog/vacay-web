@@ -12,7 +12,7 @@ function ModalTransactionAdd(props) {
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
   const [currency, setCurrency] = useState('');
-  const [amount, setAmount] = useState(0.00);
+  const [amount, setAmount] = useState(0.0);
   const [whoPaid, setWhoPaid] = useState([]);
   const [whoPaidInput, setWhoPaidInput] = useState('');
   const [whoBenefited, setWhoBenefited] = useState([...props.tab.participants]);
@@ -33,7 +33,7 @@ function ModalTransactionAdd(props) {
       ledger: props.tab._id,
       whoPaid: whoPaid.map(participant => participant.friend),
       whoBenefited: whoBenefited.map(participant => participant.friend)
-    }
+    };
 
     props.createTransaction(transaction);
     toast(`Transaction for $${amount} added!`);
@@ -45,19 +45,19 @@ function ModalTransactionAdd(props) {
   }
 
   function addWhoPaid(person) {
-    if(whoPaid.includes(person)) {
+    if (whoPaid.includes(person)) {
       toast.error('Cannot add same person twice');
       return;
     }
     setWhoPaid([...whoPaid, person]);
   }
 
-   function addNewWhoPaid() {
-    if(whoPaid.includes(whoPaidInput)) {
+  function addNewWhoPaid() {
+    if (whoPaid.includes(whoPaidInput)) {
       toast.error('This name is already on the list');
       return;
     }
-    setWhoPaid([...whoPaid, "(New) " + whoPaidInput]);
+    setWhoPaid([...whoPaid, '(New) ' + whoPaidInput]);
   }
 
   function deletePaid(i) {
@@ -67,7 +67,7 @@ function ModalTransactionAdd(props) {
   }
 
   function addWhoBenefited(person) {
-    if(whoBenefited.includes(person)) {
+    if (whoBenefited.includes(person)) {
       toast.error('Cannot add same person twice');
       return;
     }
@@ -75,11 +75,11 @@ function ModalTransactionAdd(props) {
   }
 
   function addNewWhoBenefited() {
-    if(whoBenefited.includes(whoBenefitedInput)) {
+    if (whoBenefited.includes(whoBenefitedInput)) {
       toast.error('This name is already on the list');
       return;
     }
-    setWhoBenefited([...whoBenefited, "(New) " + whoBenefitedInput]);
+    setWhoBenefited([...whoBenefited, '(New) ' + whoBenefitedInput]);
   }
 
   function deleteBenefited(i) {
@@ -90,23 +90,17 @@ function ModalTransactionAdd(props) {
 
   function cancel() {
     props.handleModalClose();
-    setTimeout(
-      () => {
-        setTitle('');
-        setDate('');
-        setCurrency('');
-        setAmount(0.00);
-        setWhoPaid([]);
-        setWhoPaidInput('');
-        setWhoBenefited([]);
-        setWhoBenefitedInput('');
-        setCurrentDotLink('step1');
-      }
-    , 200);
-  }
-
-  function getFriendById(friendId) {
-    return props.friends.find(friend => friend._id === friendId);
+    setTimeout(() => {
+      setTitle('');
+      setDate('');
+      setCurrency('');
+      setAmount(0.0);
+      setWhoPaid([]);
+      setWhoPaidInput('');
+      setWhoBenefited([]);
+      setWhoBenefitedInput('');
+      setCurrentDotLink('step1');
+    }, 200);
   }
 
   return (
@@ -116,7 +110,7 @@ function ModalTransactionAdd(props) {
           <h4 className="mb-4">New Transaction</h4>
 
           {/* Step 1 */}
-          { currentDotLink === 'step1' && 
+          {currentDotLink === 'step1' && (
             <form>
               <div className="form-group">
                 <label className="mb-0">Title</label>
@@ -126,7 +120,7 @@ function ModalTransactionAdd(props) {
                   name="title"
                   placeholder="Expensive Dinner"
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  onChange={e => setTitle(e.target.value)}
                 ></input>
                 {/*
                 TODO: Add currency to app
@@ -150,7 +144,7 @@ function ModalTransactionAdd(props) {
                   name="amount"
                   placeholder="0.00"
                   value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
+                  onChange={e => setAmount(e.target.value)}
                 ></input>
                 <label className="mb-0">Date</label>
                 <input
@@ -159,133 +153,165 @@ function ModalTransactionAdd(props) {
                   name="date"
                   placeholder="14/03/2020"
                   value={date}
-                  onChange={(e) => setDate(e.target.value)}
+                  onChange={e => setDate(e.target.value)}
                 ></input>
               </div>
             </form>
-          }
+          )}
 
           {/* Step 2 */}
-          { currentDotLink === 'step2' && 
+          {currentDotLink === 'step2' && (
             <>
               <div className="form-group mb-1">
                 <label className="mb-0">Who Paid?</label>
                 <InputDropdownSelect
-                  optionList={props.tab.participants.filter((p) => !whoPaid.includes(p))}
-                  optionListToString={p => getFriendById(p.friend).name}
-                  optionKey="friend"
+                  optionList={props.tab.participants.filter(
+                    p => !whoPaid.includes(p)
+                  )}
+                  optionListToString={p => p.friend.name}
+                  optionKey="friend._id"
                   value={whoPaidInput}
-                  onValueChange={(value) => setWhoPaidInput(value)}
+                  onValueChange={value => setWhoPaidInput(value)}
                   actionOption={true}
                   actionOptionString={`Add new person "${whoPaidInput}"`}
                   onActionOptionSelect={addNewWhoPaid}
-                  onSelect={(participant) => addWhoPaid(participant)}
+                  onSelect={participant => addWhoPaid(participant)}
                   emptyListMessage={'-- No more persons in tab --'}
                 />
               </div>
               <div className="persons-paid">
-                { whoPaid.map((participant, i) => (
-                  <div className="person-chip mr-2 my-2" key={participant.friend}>
-                    <span>{getFriendById(participant.friend).name}</span>
-                    <i className="fas fa-times ml-3" onClick={() => deletePaid(i)}></i>
+                {whoPaid.map((participant, i) => (
+                  <div
+                    className="person-chip mr-2 my-2"
+                    key={participant.friend._id}
+                  >
+                    <span>{participant.friend.name}</span>
+                    <i
+                      className="fas fa-times ml-3"
+                      onClick={() => deletePaid(i)}
+                    ></i>
                   </div>
                 ))}
               </div>
             </>
-          }
+          )}
 
           {/* Step 3 */}
-          { currentDotLink === 'step3' && 
+          {currentDotLink === 'step3' && (
             <>
               <div className="form-group mb-1">
                 <label className="mb-0">Who Benefited?</label>
                 <InputDropdownSelect
-                  optionList={props.tab.participants.filter((p) => !whoBenefited.includes(p))}
-                  optionListToString={p => getFriendById(p.friend).name}
-                  optionKey="friend"
+                  optionList={props.tab.participants.filter(
+                    p => !whoBenefited.includes(p)
+                  )}
+                  optionListToString={p => p.friend.name}
+                  optionKey="friend._id"
                   value={whoBenefitedInput}
-                  onValueChange={(value) => setWhoBenefitedInput(value)}
+                  onValueChange={value => setWhoBenefitedInput(value)}
                   actionOption={true}
                   actionOptionString={`Add new person "${whoBenefitedInput}"`}
                   onActionOptionSelect={addNewWhoBenefited}
-                  onSelect={(participant) => addWhoBenefited(participant)}
+                  onSelect={participant => addWhoBenefited(participant)}
                   emptyListMessage={'-- No more persons in tab --'}
                 />
               </div>
               <div className="persons-benefited">
-                { whoBenefited.map((participant, i) => (
-                  <div className="person-chip mr-2 my-2" key={participant.friend}>
-                    <span>{getFriendById(participant.friend).name}</span>
-                    <i className="fas fa-times ml-3" onClick={() => deleteBenefited(i)}></i>
+                {whoBenefited.map((participant, i) => (
+                  <div
+                    className="person-chip mr-2 my-2"
+                    key={participant.friend._id}
+                  >
+                    <span>{participant.friend.name}</span>
+                    <i
+                      className="fas fa-times ml-3"
+                      onClick={() => deleteBenefited(i)}
+                    ></i>
                   </div>
                 ))}
               </div>
             </>
-          }
+          )}
 
           <DotNav
-            links={["step1", "step2", "step3"]}
+            links={['step1', 'step2', 'step3']}
             currentLink={currentDotLink}
             handleLinkClick={handleChangeStep}
           />
 
           {/* Step 1 Buttons */}
-          { currentDotLink === 'step1' && 
+          {currentDotLink === 'step1' && (
             <div>
               <button
                 type="button"
                 className="btn btn-primary float-right mt-4"
                 onClick={() => handleChangeStep('step2')}
-              >Next</button>
+              >
+                Next
+              </button>
               <button
                 type="button"
                 className="btn btn-secondary float-right mt-4 mr-3"
                 onClick={cancel}
-              >Cancel</button>
+              >
+                Cancel
+              </button>
             </div>
-          }
+          )}
 
           {/* Step 2 Buttons */}
-          { currentDotLink === 'step2' && 
+          {currentDotLink === 'step2' && (
             <div>
               <button
                 type="button"
                 className="btn btn-primary float-left mt-4"
                 onClick={() => handleChangeStep('step1')}
-              >Back</button>
+              >
+                Back
+              </button>
               <button
                 type="button"
                 className="btn btn-primary float-right mt-4"
                 onClick={() => handleChangeStep('step3')}
-              >Next</button>
+              >
+                Next
+              </button>
               <button
                 type="button"
                 className="btn btn-secondary float-right mt-4 mr-3"
                 onClick={cancel}
-              >Cancel</button>
+              >
+                Cancel
+              </button>
             </div>
-          }
+          )}
 
           {/* Step 3 Buttons */}
-          { currentDotLink === 'step3' && 
+          {currentDotLink === 'step3' && (
             <div>
               <button
                 type="button"
                 className="btn btn-primary float-left mt-4"
                 onClick={() => handleChangeStep('step2')}
-              >Back</button>
+              >
+                Back
+              </button>
               <button
                 type="button"
                 className="btn btn-primary float-right mt-4"
                 onClick={handleCreateTransaction}
-              >Done</button>
+              >
+                Done
+              </button>
               <button
                 type="button"
                 className="btn btn-secondary float-right mt-4 mr-3"
                 onClick={cancel}
-              >Cancel</button>
+              >
+                Cancel
+              </button>
             </div>
-          }
+          )}
         </div>
       </Modal.Body>
     </Modal>
@@ -296,13 +322,17 @@ function mapStateToProps(state) {
   return {
     currentUser: state.auth.user,
     friends: state.friends.friends
-  }
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    createTransaction: (tabId, transaction) => dispatch(createTransaction(tabId, transaction))
-  }
+    createTransaction: (tabId, transaction) =>
+      dispatch(createTransaction(tabId, transaction))
+  };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalTransactionAdd);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ModalTransactionAdd);
