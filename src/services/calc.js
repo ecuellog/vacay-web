@@ -1,35 +1,39 @@
 export default class Calculator {
-  static balances(transactions, persons) {
+  static balances(transactions, participants) {
     let balances = new Map();
     let totalDollars = 0;
     let totalCents = 0;
     let countedTotal = false;
 
-    persons.forEach(person => {
-      balances.set(person, {
+    participants.forEach(participant => {
+      balances.set(participant.friend._id, {
         dollars: 0,
         cents: 0,
         total: 0
-      })
+      });
 
       transactions.forEach(transaction => {
-        if(transaction.whoPaid.includes(person)){
-          let newAmounts = balances.get(person);
-          newAmounts.dollars += transaction.amountDollars/transaction.whoPaid.length;
-          newAmounts.cents += transaction.amountCents/transaction.whoPaid.length;
-          balances.set(person, newAmounts);
+        if (transaction.whoPaid.includes(participant.friend._id)) {
+          let newAmounts = balances.get(participant.friend._id);
+          newAmounts.dollars +=
+            transaction.amountDollars / transaction.whoPaid.length;
+          newAmounts.cents +=
+            transaction.amountCents / transaction.whoPaid.length;
+          balances.set(participant.friend._id, newAmounts);
         }
-        if(transaction.whoBenefited.includes(person)){
-          let newAmounts = balances.get(person);
-          newAmounts.dollars -= transaction.amountDollars/transaction.whoBenefited.length;
-          newAmounts.cents -= transaction.amountCents/transaction.whoBenefited.length;
-          balances.set(person, newAmounts);
+        if (transaction.whoBenefited.includes(participant.friend._id)) {
+          let newAmounts = balances.get(participant.friend._id);
+          newAmounts.dollars -=
+            transaction.amountDollars / transaction.whoBenefited.length;
+          newAmounts.cents -=
+            transaction.amountCents / transaction.whoBenefited.length;
+          balances.set(participant.friend._id, newAmounts);
         }
-        let newTotal = balances.get(person);
-        newTotal.total = (newTotal.dollars + (newTotal.cents / 100)).toFixed(2);
-        balances.set(person, newTotal);
+        let newTotal = balances.get(participant.friend._id);
+        newTotal.total = (newTotal.dollars + newTotal.cents / 100).toFixed(2);
+        balances.set(participant.friend._id, newTotal);
 
-        if(!countedTotal) {
+        if (!countedTotal) {
           totalDollars += transaction.amountDollars;
           totalCents += transaction.amountCents;
         }
@@ -38,7 +42,7 @@ export default class Calculator {
       countedTotal = true;
     });
 
-    let total = (totalDollars + (totalCents / 100)).toFixed(2);
+    let total = (totalDollars + totalCents / 100).toFixed(2);
 
     return { balances, total };
   }

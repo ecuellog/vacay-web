@@ -32,6 +32,9 @@
     position: absolute;
     z-index: 2;
     width: 100%;
+    border-left: solid 1px $bg-level-2;
+    border-right: solid 1px $bg-level-2;
+    border-bottom: solid 1px $bg-level-2;
 
     ul {
       background-color: $bg-level-3;
