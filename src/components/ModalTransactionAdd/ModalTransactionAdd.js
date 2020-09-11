@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ModalTransactionAdd.scss';
 import { connect } from 'react-redux';
 import { createTransaction } from '../../store/actions/transactions';
@@ -15,9 +15,15 @@ function ModalTransactionAdd(props) {
   const [amount, setAmount] = useState(0.0);
   const [whoPaid, setWhoPaid] = useState([]);
   const [whoPaidInput, setWhoPaidInput] = useState('');
-  const [whoBenefited, setWhoBenefited] = useState([...props.tab.participants]);
+  const [whoBenefited, setWhoBenefited] = useState([]);
   const [whoBenefitedInput, setWhoBenefitedInput] = useState('');
   const [currentDotLink, setCurrentDotLink] = useState('step1');
+
+  useEffect(() => {
+    if(props.showModal) {
+      setWhoBenefited([...props.tab.participants]);
+    }
+  }, [props.showModal]);
 
   function handleCreateTransaction(e) {
     e.preventDefault();
@@ -44,12 +50,12 @@ function ModalTransactionAdd(props) {
     setCurrentDotLink(link);
   }
 
-  function addWhoPaid(person) {
-    if (whoPaid.includes(person)) {
-      toast.error('Cannot add same person twice');
+  function addWhoPaid(participant) {
+    if (whoPaid.includes(participant)) {
+      toast.error('Cannot add same participant twice');
       return;
     }
-    setWhoPaid([...whoPaid, person]);
+    setWhoPaid([...whoPaid, participant]);
   }
 
   function addNewWhoPaid() {
@@ -57,7 +63,7 @@ function ModalTransactionAdd(props) {
       toast.error('This name is already on the list');
       return;
     }
-    setWhoPaid([...whoPaid, '(New) ' + whoPaidInput]);
+    setWhoPaid([...whoPaid, {name: '(New) ' + whoPaidInput}]);
   }
 
   function deletePaid(i) {
@@ -66,12 +72,12 @@ function ModalTransactionAdd(props) {
     setWhoPaid(newWhoPaid);
   }
 
-  function addWhoBenefited(person) {
-    if (whoBenefited.includes(person)) {
-      toast.error('Cannot add same person twice');
+  function addWhoBenefited(participant) {
+    if (whoBenefited.includes(participant)) {
+      toast.error('Cannot add same participant twice');
       return;
     }
-    setWhoBenefited([...whoBenefited, person]);
+    setWhoBenefited([...whoBenefited, participant]);
   }
 
   function addNewWhoBenefited() {
@@ -79,7 +85,7 @@ function ModalTransactionAdd(props) {
       toast.error('This name is already on the list');
       return;
     }
-    setWhoBenefited([...whoBenefited, '(New) ' + whoBenefitedInput]);
+    setWhoBenefited([...whoBenefited, {name: '(New) ' + whoBenefitedInput}]);
   }
 
   function deleteBenefited(i) {
@@ -166,13 +172,13 @@ function ModalTransactionAdd(props) {
                 <label className="mb-0">Who Paid?</label>
                 <InputDropdownSelect
                   optionList={props.tab.participants.filter(
-                    p => !whoPaid.includes(p)
+                    p => !whoPaid.map(paid => paid.friend._id).includes(p.friend._id)
                   )}
                   optionListToString={p => p.friend.name}
                   optionKey="friend._id"
                   value={whoPaidInput}
                   onValueChange={value => setWhoPaidInput(value)}
-                  actionOption={true}
+                  actionOption={false} // TODO: false for now, no adding new participants
                   actionOptionString={`Add new person "${whoPaidInput}"`}
                   onActionOptionSelect={addNewWhoPaid}
                   onSelect={participant => addWhoPaid(participant)}
@@ -183,7 +189,7 @@ function ModalTransactionAdd(props) {
                 {whoPaid.map((participant, i) => (
                   <div
                     className="person-chip mr-2 my-2"
-                    key={participant.friend._id}
+                    key={i}
                   >
                     <span>{participant.friend.name}</span>
                     <i
@@ -203,13 +209,13 @@ function ModalTransactionAdd(props) {
                 <label className="mb-0">Who Benefited?</label>
                 <InputDropdownSelect
                   optionList={props.tab.participants.filter(
-                    p => !whoBenefited.includes(p)
+                    p => !whoBenefited.map(ben => ben.friend._id).includes(p.friend._id)
                   )}
                   optionListToString={p => p.friend.name}
                   optionKey="friend._id"
                   value={whoBenefitedInput}
                   onValueChange={value => setWhoBenefitedInput(value)}
-                  actionOption={true}
+                  actionOption={false} // TODO: false for now, no adding new participants
                   actionOptionString={`Add new person "${whoBenefitedInput}"`}
                   onActionOptionSelect={addNewWhoBenefited}
                   onSelect={participant => addWhoBenefited(participant)}
@@ -220,7 +226,7 @@ function ModalTransactionAdd(props) {
                 {whoBenefited.map((participant, i) => (
                   <div
                     className="person-chip mr-2 my-2"
-                    key={participant.friend._id}
+                    key={i}
                   >
                     <span>{participant.friend.name}</span>
                     <i
