@@ -11,6 +11,17 @@ export default class AuthService {
     );
   }
 
+  static register(name, email, password) {
+    return api.post('/api/auth/register',
+      {
+        name,
+        email,
+        password
+      },
+      { withCredentials: true }
+    )
+  }
+
   static getCurrentAuthUser() {
     return api.get('/api/users/current',
       { withCredentials: true }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { setTokenAuthenticatedUser } from './store/actions/auth';
 import { toast } from 'react-toastify';
 import LoginView from './views/LoginView/LoginView';
+import RegisterView from './views/RegisterView/RegisterView';
 import TabsView from './views/TabsView/TabsView';
 import SharedTabsView from './views/SharedTabsView/SharedTabsView';
 import FriendsView from './views/FriendsView';
@@ -49,6 +50,9 @@ function App(props) {
               {/* Unauthenticated routes */}
               <ViewWrapperUnauthenticated path="/login">
                 <LoginView />
+              </ViewWrapperUnauthenticated>
+              <ViewWrapperUnauthenticated path="/register">
+                <RegisterView />
               </ViewWrapperUnauthenticated>
 
               {/* Authenticated routes*/}

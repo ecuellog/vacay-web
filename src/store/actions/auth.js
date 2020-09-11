@@ -54,6 +54,16 @@ export function authenticateUser(email, password) {
   };
 }
 
+export function registerUser(name, email, password) {
+  return function(dispatch) {
+    dispatch(setRequestProcessing(true));
+    return AuthService.register(name, email, password)
+      .then(res => dispatch(setAuthenticatedUser(res.data.user)))
+      .catch(error => dispatch(setRequestError(error.response.data.message)))
+      .then(() => dispatch(setRequestProcessing(false)));
+  };
+}
+
 export function setTokenAuthenticatedUser() {
   return function(dispatch) {
     dispatch(setRequestProcessing(true));
