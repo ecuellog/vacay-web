@@ -1,5 +1,7 @@
 # :palm_tree: vacay-web
-A web application for tracking shared expenses.
+A React front-end for Vacay Tabs, a web app for tracking shared expenses.
+
+#### This application depends on [vacayIOU](https://github.com/ecuellog/vacay-iou)
 
 ## To run (dev-mode):
 
