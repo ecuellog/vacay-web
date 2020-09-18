@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './store/reducers';
 import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import './index.scss';
@@ -12,7 +12,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 const store = createStore(rootReducer,
-  compose(applyMiddleware(thunk), composeWithDevTools())
+  composeWithDevTools(applyMiddleware(thunk))
 );
 
 export const api = axios.create({
