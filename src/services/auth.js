@@ -2,7 +2,7 @@ import { api } from '../index';
 
 export default class AuthService {
   static login(email, password) {
-    return api.post('/api/auth/login',
+    return api.post('/auth/login',
       {
         email,
         password
@@ -12,7 +12,7 @@ export default class AuthService {
   }
 
   static register(name, email, password) {
-    return api.post('/api/auth/register',
+    return api.post('/auth/register',
       {
         name,
         email,
@@ -23,13 +23,13 @@ export default class AuthService {
   }
 
   static getCurrentAuthUser() {
-    return api.get('/api/users/current',
+    return api.get('/users/current',
       { withCredentials: true }
     );
   }
 
   static logout() {
-    return api.get('/api/auth/logout',
+    return api.get('/auth/logout',
       { withCredentials: true }
     )
   }
