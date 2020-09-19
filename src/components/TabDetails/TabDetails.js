@@ -4,7 +4,7 @@ import { fetchTransactions } from '../../store/actions/transactions';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import * as _ from 'lodash';
+import get from 'lodash/get';
 import ModalTransactionAdd from '../ModalTransactionAdd/ModalTransactionAdd';
 
 function TabDetails(props) {
@@ -52,7 +52,7 @@ function TabDetails(props) {
                 <p>{participant.friend.name}</p>
                 <p>
                   $
-                  {_.get(
+                  {get(
                     props.balance.balances.get(participant.friend._id),
                     'total'
                   )}

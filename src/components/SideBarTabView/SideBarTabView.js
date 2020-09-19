@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import ActionClickLogout from '../ActionClickLogout/ActionClickLogout';
-import * as _ from 'lodash';
+import get from 'lodash/get';
 import './SideBarTabView.scss';
 
 function SideBarTabView(props) {
   const [tabId, setTabId] = useState(null);
 
   useEffect(() => {
-    setTabId(_.get(props, 'tab._id'));
+    setTabId(get(props, 'tab._id'));
   }, [props.tab]);
 
   return (

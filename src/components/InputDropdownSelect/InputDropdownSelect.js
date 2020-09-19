@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import * as _ from 'lodash';
+import get from 'lodash/get';
 import './InputDropdownSelect.scss';
 
 function InputDropdownSelect(props) {
@@ -78,7 +78,7 @@ function InputDropdownSelect(props) {
                 {getVisibleOptions().map(option => (
                   <li
                     className="clickable"
-                    key={_.get(option, props.optionKey)}
+                    key={get(option, props.optionKey)}
                     onClick={() => handleOptionSelect(option)}
                   >
                     {props.optionListToString(option)}

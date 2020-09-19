@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createTab } from '../../store/actions/tabs';
 import { toast } from 'react-toastify';
 import { Modal } from 'react-bootstrap';
-import * as _ from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 import { useForm } from "react-hook-form";
 import TransactionAddParticipantItem from '../TransactionAddParticipantItem/TransactionAddParticipantItem';
 import InputDropdownSelect from '../InputDropdownSelect/InputDropdownSelect';
@@ -66,13 +66,13 @@ function ModalTabAdd(props) {
   }
 
   function changeParticipantProp(index, prop, propName) {
-    let newParticipants = _.cloneDeep(participants);
+    let newParticipants = cloneDeep(participants);
     newParticipants[index][propName] = prop;
     setParticipants(newParticipants);
   }
 
   function deleteParticipant(index) {
-    let newParticipants = _.cloneDeep(participants);
+    let newParticipants = cloneDeep(participants);
     newParticipants.splice(index, 1);
     setParticipants(newParticipants);
   }

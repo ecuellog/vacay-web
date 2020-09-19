@@ -6,7 +6,7 @@ import { Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import DotNav from '../DotNav/DotNav';
 import InputDropdownSelect from '../InputDropdownSelect/InputDropdownSelect';
-import * as _ from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 
 function ModalTransactionAdd(props) {
   const [title, setTitle] = useState('');
@@ -67,7 +67,7 @@ function ModalTransactionAdd(props) {
   }
 
   function deletePaid(i) {
-    let newWhoPaid = _.cloneDeep(whoPaid);
+    let newWhoPaid = cloneDeep(whoPaid);
     newWhoPaid.splice(i, 1);
     setWhoPaid(newWhoPaid);
   }
@@ -89,7 +89,7 @@ function ModalTransactionAdd(props) {
   }
 
   function deleteBenefited(i) {
-    let newWhoBenefited = _.cloneDeep(whoBenefited);
+    let newWhoBenefited = cloneDeep(whoBenefited);
     newWhoBenefited.splice(i, 1);
     setWhoBenefited(newWhoBenefited);
   }

@@ -4,14 +4,14 @@ import moment from 'moment';
 import { setSelectedTabFromList } from '../../store/actions/tabs';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import * as _ from 'lodash';
+import get from 'lodash/get';
 
 function TabItem(props) {
   return (
     <div
       className={`
         component-tab-item p-3 mb-3
-        ${props.tab._id === _.get(props.selectedTab, "_id") ? "active": ""}
+        ${props.tab._id === get(props.selectedTab, "_id") ? "active": ""}
       `}
       onClick={() => props.setSelectedTabFromList(props.tab._id)}
     >

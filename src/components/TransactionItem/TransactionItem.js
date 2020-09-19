@@ -1,6 +1,4 @@
 import React from 'react';
-import moment from 'moment';
-import * as _ from 'lodash';
 import './TransactionItem.scss';
 
 function TransactionItem(props) {

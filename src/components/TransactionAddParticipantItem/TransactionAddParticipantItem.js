@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import * as _ from 'lodash';
 import Switch from '@material-ui/core/Switch';
 import './TransactionAddParticipantItem.scss';
 import { Avatar } from '@material-ui/core';
